@@ -1,4 +1,32 @@
 module.exports = {
   root: true,
-  extends: '@react-native',
+  parser: '@typescript-eslint/parser',
+  extends: [
+    'airbnb',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:react-native/all',
+    'prettier',
+    'prettier/@typescript-eslint',
+  ],
+  parserOptions: {
+    ecmaFeatures: {
+      jsx: true,
+    },
+    ecmaVersion: 2021,
+    sourceType: 'module',
+  },
+  env: {
+    'react-native/react-native': true,
+  },
+  settings: {
+    'import/resolver': {
+      node: {
+        extensions: ['.js', '.jsx', '.ts', '.tsx', '.json', '.native.js'],
+      },
+    },
+  },
+  rules: {
+    // Add any project-specific rules or overrides here
+    'prettier/prettier': 'warning',
+  },
 };

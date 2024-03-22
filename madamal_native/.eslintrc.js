@@ -2,13 +2,14 @@ module.exports = {
   root: true,
   parser: '@typescript-eslint/parser',
   extends: [
-    'airbnb',
+    'airbnb-typescript',
     'plugin:@typescript-eslint/recommended',
     'plugin:react-native/all',
     'prettier',
     'plugin:prettier/recommended',
   ],
   parserOptions: {
+    project: './tsconfig.json',
     ecmaFeatures: {
       jsx: true,
     },
@@ -21,39 +22,21 @@ module.exports = {
   settings: {
     'import/extensions': ['.js', '.jsx', '.ts', '.tsx'],
     'import/resolver': {
-      node: {
-        extensions: ['.js', '.jsx', '.ts', '.tsx', '.json', '.native.js'],
-        moduleDirectory: ['node_modules', 'src'],
-      },
+      typescript: {},
     },
   },
-  plugins: ['unused-imports', 'prefer-arrow'],
+  plugins: ['unused-imports', 'import'],
   rules: {
     // Add any project-specific rules or overrides here
     'prettier/prettier': 1,
     'unused-imports/no-unused-imports': 'error',
-    'react/jsx-filename-extension': [0, { extensions: ['.js', '.jsx'] }],
+    'react/jsx-filename-extension': [
+      0,
+      { extensions: ['.js', '.jsx', '.ts', '.tsx'] },
+    ],
     'import/prefer-default-export': 'off',
     '@typescript-eslint/no-unused-vars': 1,
-    'import/extensions': [
-      'error',
-      'ignorePackages',
-      {
-        js: 'never',
-        jsx: 'never',
-        ts: 'never',
-        tsx: 'never',
-      },
-    ],
-    'prefer-const': 'error', // Enforce use of const for all declarations
-    'arrow-body-style': ['error', 'as-needed'], // Enforce arrow function syntax
-    'prefer-arrow/prefer-arrow-functions': [
-      'error',
-      {
-        disallowPrototype: true,
-        singleReturnOnly: false,
-        classPropertiesAllowed: false,
-      },
-    ],
+    'import/extensions': ['error', 'never'],
+    'import/no-extraneous-dependencies': ['error'],
   },
 };

@@ -25,8 +25,10 @@ module.exports = {
       },
     },
   },
+  plugins: ['unused-imports'],
   rules: {
     // Add any project-specific rules or overrides here
-    'prettier/prettier': 'warning',
+    'prettier/prettier': 1,
+    'unused-imports/no-unused-imports': 'error',
   },
 };

@@ -1,6 +1,6 @@
 import React from 'react';
-import { UserReportsScreen } from '@/screens';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { UserReportsScreen } from '@/screens';
 
 const UserReportsStack = createNativeStackNavigator();
 

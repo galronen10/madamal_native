@@ -1,12 +1,12 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
+import { FontAwesome } from '@expo/vector-icons';
 import {
   HomeScreenStack,
   UserProfileScreenStack,
   UserReportsScreenStack,
 } from '../screensStacks';
-import { FontAwesome } from '@expo/vector-icons';
 
 const Tab = createBottomTabNavigator();
 
@@ -18,9 +18,11 @@ export const BottomNavigator = () => {
           tabBarIcon: ({ color, size }) => {
             if (route.name === 'home') {
               return <FontAwesome name="home" size={size} color={color} />;
-            } else if (route.name === 'userProfile') {
+            }
+            if (route.name === 'userProfile') {
               return <FontAwesome name="user" size={size} color={color} />;
-            } else if (route.name === 'userReports') {
+            }
+            if (route.name === 'userReports') {
               return <FontAwesome name="list" size={size} color={color} />;
             }
           },

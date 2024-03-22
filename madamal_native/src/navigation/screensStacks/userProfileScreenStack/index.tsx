@@ -1,6 +1,6 @@
 import React from 'react';
-import { UserProfileScreen } from '@/screens';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { UserProfileScreen } from '@/screens';
 
 const UserProfileStack = createNativeStackNavigator();
 

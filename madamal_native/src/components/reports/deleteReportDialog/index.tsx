@@ -30,7 +30,7 @@ export const DeleteReportDialog: FC<IDeleteReportDialogProps> = ({
         <Dialog.Actions>
           <Button
             mode="contained"
-            onPress={handleClose}
+            onPress={onDelete}
             style={[styles.button, styles.deleteButton]}
           >
             <Text style={styles.textStyle}>מחק דיווח</Text>

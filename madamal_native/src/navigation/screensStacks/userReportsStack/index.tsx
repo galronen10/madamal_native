@@ -1,6 +1,6 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { UserReportsScreen } from '@/screens';
+import { ReportFormScreen, UserReportsScreen } from '@/screens';
 
 const UserReportsStack = createNativeStackNavigator();
 
@@ -11,6 +11,7 @@ export const UserReportsScreenStack = () => {
         name="UserReports"
         component={UserReportsScreen}
       />
+      <UserReportsStack.Screen name="EditReport" component={ReportFormScreen} />
     </UserReportsStack.Navigator>
   );
 };

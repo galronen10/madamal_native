@@ -1,7 +1,7 @@
 import { View, Text } from 'react-native';
-import React from 'react';
+import React, { FC } from 'react';
 
-export const UserProfileScreen = () => {
+export const UserProfileScreen: FC = () => {
   return (
     <View>
       <Text>UserProfile</Text>

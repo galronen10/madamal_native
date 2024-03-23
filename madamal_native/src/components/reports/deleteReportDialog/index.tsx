@@ -1,4 +1,5 @@
 import { View, Text, Modal, Pressable } from 'react-native';
+import { BlurView } from 'expo-blur';
 import React, { FC } from 'react';
 import { styles } from './styles';
 
@@ -24,27 +25,29 @@ export const DeleteReportDialog: FC<IDeleteReportDialogProps> = ({
       visible={isVisible}
       onRequestClose={handleClose}
     >
-      <View style={styles.centeredView}>
-        <View style={styles.modalView}>
-          <Text style={styles.modalText}>
-            האם אתה בטוח שברצונך למחוק את דיווח זה
-          </Text>
-          <View style={styles.buttonContainer}>
-            <Pressable
-              style={[styles.button, styles.deleteButton]}
-              onPress={onDelete}
-            >
-              <Text style={styles.textStyle}>מחק דיווח</Text>
-            </Pressable>
-            <Pressable
-              style={[styles.button, styles.cancelButton]}
-              onPress={handleClose}
-            >
-              <Text style={styles.textStyle}>בטל</Text>
-            </Pressable>
+      <BlurView intensity={600} style={styles.blurView}>
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalText}>
+              האם אתה בטוח שברצונך למחוק את דיווח זה
+            </Text>
+            <View style={styles.buttonContainer}>
+              <Pressable
+                style={[styles.button, styles.deleteButton]}
+                onPress={onDelete}
+              >
+                <Text style={styles.textStyle}>מחק דיווח</Text>
+              </Pressable>
+              <Pressable
+                style={[styles.button, styles.cancelButton]}
+                onPress={handleClose}
+              >
+                <Text style={styles.textStyle}>בטל</Text>
+              </Pressable>
+            </View>
           </View>
         </View>
-      </View>
+      </BlurView>
     </Modal>
   );
 };

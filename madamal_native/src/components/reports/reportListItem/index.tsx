@@ -1,14 +1,25 @@
 import { View, Text, Image, TouchableOpacity } from 'react-native';
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { IReport } from '@/models';
 import { styles } from './styles';
 import { MaterialIcons } from '@expo/vector-icons';
+import { DeleteReportDialog } from '../deleteReportDialog';
 
 interface IReportListItemProps {
   report: IReport;
 }
 
 export const ReportListItem: FC<IReportListItemProps> = ({ report }) => {
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+
+  const closeDeleteDialog = (): void => {
+    setShowDeleteDialog(false);
+  };
+
+  const openDeleteDialog = (): void => {
+    setShowDeleteDialog(true);
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -22,7 +33,7 @@ export const ReportListItem: FC<IReportListItemProps> = ({ report }) => {
         </View>
 
         <View style={styles.actions}>
-          <TouchableOpacity onPress={() => console.log('Liked')}>
+          <TouchableOpacity onPress={openDeleteDialog}>
             <MaterialIcons
               name="delete"
               size={20}
@@ -44,6 +55,11 @@ export const ReportListItem: FC<IReportListItemProps> = ({ report }) => {
       {report.image && (
         <Image source={{ uri: report.image }} style={styles.reportImage} />
       )}
+
+      <DeleteReportDialog
+        handleClose={closeDeleteDialog}
+        isVisible={showDeleteDialog}
+      />
     </View>
   );
 };

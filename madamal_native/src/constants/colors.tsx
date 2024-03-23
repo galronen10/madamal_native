@@ -13,6 +13,8 @@ const Colors = {
   border: '#ced4da',
   listBorder: '#ccc',
   listItemTime: '#666',
+  white: 'white',
+  black: 'black',
 };
 
 export default Colors;

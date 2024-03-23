@@ -1,9 +1,12 @@
-import { StatusBar, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
   listRow: {
-    flex: 1,
-    marginTop: StatusBar.currentHeight,
+    borderRadius: 2,
+    elevation: 1,
+    flexDirection: 'row',
+    height: 150,
+    margin: 4,
   },
   listRowId: {
     fontSize: 25,

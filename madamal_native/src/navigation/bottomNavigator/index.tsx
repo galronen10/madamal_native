@@ -14,36 +14,40 @@ export const BottomNavigator = () => {
   return (
     <NavigationContainer>
       <Tab.Navigator
-        screenOptions={({ route }) => ({
-          tabBarIcon: ({ color, size }) => {
-            if (route.name === 'home') {
-              return <FontAwesome name="home" size={size} color={color} />;
-            }
-            if (route.name === 'userProfile') {
-              return <FontAwesome name="user" size={size} color={color} />;
-            }
-            if (route.name === 'userReports') {
-              return <FontAwesome name="list" size={size} color={color} />;
-            }
-          },
+        screenOptions={{
           tabBarActiveTintColor: 'tomato',
           tabBarInactiveTintColor: 'gray',
-        })}
+        }}
       >
         <Tab.Screen
           name="home"
           component={HomeScreenStack}
-          options={{ headerShown: false }}
+          options={{
+            headerShown: false,
+            tabBarIcon: ({ color, size }) => (
+              <FontAwesome name="home" size={size} color={color} />
+            ),
+          }}
         />
         <Tab.Screen
           name="userProfile"
           component={UserProfileScreenStack}
-          options={{ headerShown: false }}
+          options={{
+            headerShown: false,
+            tabBarIcon: ({ color, size }) => (
+              <FontAwesome name="user" size={size} color={color} />
+            ),
+          }}
         />
         <Tab.Screen
           name="userReports"
           component={UserReportsScreenStack}
-          options={{ headerShown: false }}
+          options={{
+            headerShown: false,
+            tabBarIcon: ({ color, size }) => (
+              <FontAwesome name="list" size={size} color={color} />
+            ),
+          }}
         />
       </Tab.Navigator>
     </NavigationContainer>

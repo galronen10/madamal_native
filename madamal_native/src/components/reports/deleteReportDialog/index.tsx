@@ -1,7 +1,7 @@
-import { View, Text, Modal, Pressable } from 'react-native';
-import { BlurView } from 'expo-blur';
+/* eslint-disable react-native/no-raw-text */
 import React, { FC } from 'react';
 import { styles } from './styles';
+import { Portal, Dialog, Text, Button } from 'react-native-paper';
 
 interface IDeleteReportDialogProps {
   isVisible: boolean;
@@ -19,35 +19,30 @@ export const DeleteReportDialog: FC<IDeleteReportDialogProps> = ({
   };
 
   return (
-    <Modal
-      animationType="fade"
-      transparent={true}
-      visible={isVisible}
-      onRequestClose={handleClose}
-    >
-      <BlurView intensity={600} style={styles.blurView}>
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <Text style={styles.modalText}>
-              האם אתה בטוח שברצונך למחוק את דיווח זה
-            </Text>
-            <View style={styles.buttonContainer}>
-              <Pressable
-                style={[styles.button, styles.deleteButton]}
-                onPress={onDelete}
-              >
-                <Text style={styles.textStyle}>מחק דיווח</Text>
-              </Pressable>
-              <Pressable
-                style={[styles.button, styles.cancelButton]}
-                onPress={handleClose}
-              >
-                <Text style={styles.textStyle}>בטל</Text>
-              </Pressable>
-            </View>
-          </View>
-        </View>
-      </BlurView>
-    </Modal>
+    <Portal>
+      <Dialog visible={isVisible} onDismiss={handleClose}>
+        <Dialog.Title style={styles.bodyText}>מחק דיווח</Dialog.Title>
+        <Dialog.Content>
+          <Text style={styles.bodyText}>
+            האם אתה בטוח שברצונך למחוק את דיווח זה
+          </Text>
+        </Dialog.Content>
+        <Dialog.Actions>
+          <Button
+            mode="contained"
+            onPress={handleClose}
+            style={[styles.button, styles.deleteButton]}
+          >
+            <Text style={styles.textStyle}>מחק דיווח</Text>
+          </Button>
+          <Button
+            onPress={handleClose}
+            style={[styles.button, styles.cancelButton]}
+          >
+            <Text style={styles.textStyle}>בטל</Text>
+          </Button>
+        </Dialog.Actions>
+      </Dialog>
+    </Portal>
   );
 };

@@ -3,6 +3,7 @@ import { Card, Paragraph, IconButton, Avatar } from 'react-native-paper';
 import React, { FC, useState } from 'react';
 import { IReport } from '@/models';
 import { styles } from './styles';
+import { DeleteReportDialog } from '../deleteReportDialog';
 
 interface IReportListItemProps {
   report: IReport;
@@ -63,6 +64,11 @@ export const ReportListItem: FC<IReportListItemProps> = ({ report }) => {
           />
         )}
       </Card>
+
+      <DeleteReportDialog
+        handleClose={closeDeleteDialog}
+        isVisible={showDeleteDialog}
+      />
     </View>
   );
 };

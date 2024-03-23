@@ -6,20 +6,18 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'flex-start',
-    marginTop: 5,
+  },
+  card: {
+    alignContent: 'center',
+    paddingBottom: 20,
   },
   container: {
-    borderBottomColor: Colors.listBorder,
-    borderBottomWidth: 1,
-    padding: 10,
+    margin: 10,
   },
   header: {
     alignItems: 'center',
-    flexDirection: 'row-reverse',
+    flexDirection: 'row',
     marginBottom: 10,
-  },
-  headerText: {
-    flex: 1,
   },
   icon: {
     marginRight: 10,
@@ -30,19 +28,18 @@ export const styles = StyleSheet.create({
   },
   profileImage: {
     borderRadius: 25,
-    height: 50,
-    marginLeft: 10,
-    width: 50,
+    marginRight: 10,
   },
   reportData: {
     marginBottom: 10,
     textAlign: 'right',
   },
   reportImage: {
+    alignSelf: 'center',
     borderRadius: 10,
     height: 200,
     resizeMode: 'cover',
-    width: '100%',
+    width: '80%',
   },
   username: {
     fontSize: 16,

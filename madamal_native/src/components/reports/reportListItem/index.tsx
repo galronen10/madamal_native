@@ -1,8 +1,8 @@
-import { View, Text, Image, TouchableOpacity } from 'react-native';
+import { View } from 'react-native';
+import { Card, Paragraph, IconButton, Avatar } from 'react-native-paper';
 import React, { FC, useState } from 'react';
 import { IReport } from '@/models';
 import { styles } from './styles';
-import { MaterialIcons } from '@expo/vector-icons';
 import { DeleteReportDialog } from '../deleteReportDialog';
 
 interface IReportListItemProps {
@@ -22,39 +22,48 @@ export const ReportListItem: FC<IReportListItemProps> = ({ report }) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <Image
-          source={{ uri: 'https://via.placeholder.com/50' }} // Placeholder image URL
-          style={styles.profileImage}
+      <Card style={styles.card}>
+        <Card.Title
+          style={styles.header}
+          title={report.ownerId}
+          titleStyle={styles.username}
+          // subtitle={postTime}
+          right={() => (
+            <Avatar.Image
+              style={styles.profileImage}
+              size={50}
+              source={{ uri: 'https://via.placeholder.com/50' }}
+            />
+          )}
+          left={(props) => (
+            <View style={styles.actions}>
+              <IconButton
+                size={20}
+                iconColor="black"
+                style={styles.icon}
+                icon="delete"
+                onPress={openDeleteDialog}
+              />
+              <IconButton
+                size={20}
+                iconColor="black"
+                style={styles.icon}
+                icon="pencil"
+                onPress={() => console.log('Pressed')}
+              />
+            </View>
+          )}
         />
-        <View style={styles.headerText}>
-          <Text style={styles.username}>{report.ownerId}</Text>
-          {/* <Text style={styles.postTime}>{postTime}</Text> */}
-        </View>
-
-        <View style={styles.actions}>
-          <TouchableOpacity onPress={openDeleteDialog}>
-            <MaterialIcons
-              name="delete"
-              size={20}
-              color="black"
-              style={styles.icon}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => console.log('Commented')}>
-            <MaterialIcons
-              name="edit"
-              size={20}
-              color="black"
-              style={styles.icon}
-            />
-          </TouchableOpacity>
-        </View>
-      </View>
-      <Text style={styles.reportData}>{report.data}</Text>
-      {report.image && (
-        <Image source={{ uri: report.image }} style={styles.reportImage} />
-      )}
+        <Card.Content>
+          <Paragraph style={styles.reportData}>{report.data}</Paragraph>
+        </Card.Content>
+        {report.image && (
+          <Card.Cover
+            style={styles.reportImage}
+            source={{ uri: report.image }}
+          />
+        )}
+      </Card>
 
       <DeleteReportDialog
         handleClose={closeDeleteDialog}

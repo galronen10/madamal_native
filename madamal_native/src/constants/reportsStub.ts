@@ -3,8 +3,9 @@ import { IReport } from '@/models';
 export const reportListStub: IReport[] = [
   {
     id: 1,
-    data: '1111',
+    data: '1111fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff',
     ownerId: 1,
+    image: 'https://via.placeholder.com/50',
   },
   {
     id: 2,
@@ -22,22 +23,22 @@ export const reportListStub: IReport[] = [
     ownerId: 2,
   },
   {
-    id: 4,
+    id: 5,
     data: '4444',
     ownerId: 2,
   },
   {
-    id: 4,
+    id: 6,
     data: '4444',
     ownerId: 2,
   },
   {
-    id: 4,
+    id: 7,
     data: '4444',
     ownerId: 2,
   },
   {
-    id: 4,
+    id: 8,
     data: '4444',
     ownerId: 2,
   },

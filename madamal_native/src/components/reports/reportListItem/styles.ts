@@ -1,28 +1,52 @@
 import { StyleSheet } from 'react-native';
+import Colors from '@/constants/colors'; // Import the Colors file
 
 export const styles = StyleSheet.create({
-  listRow: {
-    borderRadius: 2,
-    elevation: 1,
+  actions: {
+    alignItems: 'center',
     flexDirection: 'row',
-    height: 150,
-    margin: 4,
+    justifyContent: 'flex-start',
+    marginTop: 5,
   },
-  listRowId: {
-    fontSize: 25,
+  container: {
+    borderBottomColor: Colors.listBorder,
+    borderBottomWidth: 1,
+    padding: 10,
   },
-  listRowImage: {
-    height: 130,
-    margin: 10,
-    resizeMode: 'contain',
-    width: 130,
+  header: {
+    alignItems: 'center',
+    flexDirection: 'row-reverse',
+    marginBottom: 10,
   },
-  listRowName: {
-    fontSize: 30,
-  },
-  listRowTextContainer: {
+  headerText: {
     flex: 1,
-    justifyContent: 'space-around',
-    margin: 10,
+  },
+  icon: {
+    marginRight: 10,
+  },
+  postTime: {
+    color: Colors.listItemTime,
+    textAlign: 'right',
+  },
+  profileImage: {
+    borderRadius: 25,
+    height: 50,
+    marginLeft: 10,
+    width: 50,
+  },
+  reportData: {
+    marginBottom: 10,
+    textAlign: 'right',
+  },
+  reportImage: {
+    borderRadius: 10,
+    height: 200,
+    resizeMode: 'cover',
+    width: '100%',
+  },
+  username: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    textAlign: 'right',
   },
 });

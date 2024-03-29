@@ -38,5 +38,6 @@ module.exports = {
     '@typescript-eslint/no-unused-vars': 1,
     'import/extensions': ['error', 'never'],
     'import/no-extraneous-dependencies': ['error'],
+    '@typescript-eslint/no-explicit-any': 1,
   },
 };

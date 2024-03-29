@@ -1,32 +1,22 @@
-import { StatusBar, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
-  avatar: {
-    alignSelf: 'center',
-    height: 200,
-    marginTop: 10,
-    resizeMode: 'contain',
-  },
   button: {
-    alignItems: 'center',
-    flex: 1,
-    margin: 10,
-  },
-  buttonText: {
-    padding: 10,
-  },
-  buttonsContainer: {
-    alignSelf: 'baseline',
-    flexDirection: 'row',
+    marginTop: 10,
   },
   container: {
     flex: 1,
-    marginTop: StatusBar.currentHeight,
+    paddingHorizontal: 20,
+    paddingTop: 60,
+  },
+  formBody: {
+    alignContent: 'center',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    // height: 'auto',
   },
   input: {
-    borderWidth: 1,
-    height: 40,
-    margin: 12,
-    padding: 10,
+    marginBottom: 10,
   },
 });

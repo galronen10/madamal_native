@@ -1,7 +1,7 @@
 import { View } from 'react-native';
 import { Card, Paragraph, IconButton, Avatar } from 'react-native-paper';
 import React, { FC, useState } from 'react';
-import { IReport } from '@/models';
+import { IReport } from '@/models/reports';
 import { styles } from './styles';
 import { DeleteReportDialog } from '../deleteReportDialog';
 

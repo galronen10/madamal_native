@@ -1,7 +1,6 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { FontAwesome } from '@expo/vector-icons';
-
 import { HomeScreen, UserProfileScreen, UserReportsScreen } from '@/screens';
 import { HeaderAddReport } from '@/navigation/components';
 import { EAppRoutes } from '@/models/routes';
@@ -33,21 +32,21 @@ export const BottomNavigator = () => {
       <Tab.Screen
         name={EAppRoutes.myReports}
         component={UserReportsScreen}
-        options={{
+        options={({ navigation: { navigate } }) => ({
           tabBarIcon: ({ color, size }) => (
             <FontAwesome name="list" size={size} color={color} />
           ),
-        }}
+          headerLeft: () => <HeaderAddReport navigate={navigate} />,
+        })}
       />
       <Tab.Screen
         name={EAppRoutes.myProfile}
         component={UserProfileScreen}
-        options={({ navigation: { navigate } }) => ({
+        options={{
           tabBarIcon: ({ color, size }) => (
             <FontAwesome name="user" size={size} color={color} />
           ),
-          headerLeft: () => <HeaderAddReport navigate={navigate} />,
-        })}
+        }}
       />
     </Tab.Navigator>
   );

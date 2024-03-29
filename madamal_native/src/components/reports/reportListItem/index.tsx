@@ -49,7 +49,7 @@ export const ReportListItem: FC<IReportListItemProps> = ({ report }) => {
                 iconColor="black"
                 style={styles.icon}
                 icon="delete"
-                onPress={openEditScreen}
+                onPress={openDeleteDialog}
               />
               <IconButton
                 size={20}

@@ -42,9 +42,9 @@ export const styles = StyleSheet.create({
     width: '80%',
   },
   username: {
+    alignSelf: 'flex-end',
     fontSize: 16,
     fontWeight: 'bold',
     textAlign: 'right',
-    width: 'auto',
   },
 });

@@ -4,12 +4,15 @@ import React, { FC, useState } from 'react';
 import { IReport } from '@/models/reports';
 import { styles } from './styles';
 import { DeleteReportDialog } from '../deleteReportDialog';
+import { useNavigation } from '@react-navigation/native';
 
 interface IReportListItemProps {
   report: IReport;
 }
 
 export const ReportListItem: FC<IReportListItemProps> = ({ report }) => {
+  const navigation = useNavigation();
+
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
 
   const closeDeleteDialog = (): void => {
@@ -49,7 +52,7 @@ export const ReportListItem: FC<IReportListItemProps> = ({ report }) => {
                 iconColor="black"
                 style={styles.icon}
                 icon="pencil"
-                onPress={() => console.log('Pressed')}
+                // onPress={() => navigation.navigate(EAppRoutes.reportForm)}
               />
             </View>
           )}

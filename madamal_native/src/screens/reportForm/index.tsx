@@ -13,14 +13,11 @@ import { View } from 'react-native';
 import { Button } from 'react-native-paper';
 import { styles } from './styles';
 import { AddReportFormBody } from './components';
-import { NativeStackHeaderProps } from '@react-navigation/native-stack';
+import { useNavigation } from '@react-navigation/native';
 
-interface IReportFormScreenProps
-  extends Pick<NativeStackHeaderProps, 'navigation'> {}
+export const ReportFormScreen: FC = () => {
+  const navigation = useNavigation();
 
-export const ReportFormScreen: FC<IReportFormScreenProps> = ({
-  navigation,
-}) => {
   const {
     getReportForForm,
     handleSave,

@@ -22,12 +22,12 @@ export const BottomNavigator = () => {
       <Tab.Screen
         name={EAppRoutes.home}
         component={HomeScreen}
-        options={{
+        options={({ navigation: { navigate } }) => ({
           tabBarIcon: ({ color, size }) => (
             <FontAwesome name="home" size={size} color={color} />
           ),
-          headerLeft: () => <HeaderAddReport />,
-        }}
+          headerLeft: () => <HeaderAddReport navigate={navigate} />,
+        })}
       />
       <Tab.Screen
         name={EAppRoutes.myReports}
@@ -41,12 +41,12 @@ export const BottomNavigator = () => {
       <Tab.Screen
         name={EAppRoutes.myProfile}
         component={UserProfileScreen}
-        options={{
+        options={({ navigation: { navigate } }) => ({
           tabBarIcon: ({ color, size }) => (
             <FontAwesome name="user" size={size} color={color} />
           ),
-          headerLeft: () => <HeaderAddReport />,
-        }}
+          headerLeft: () => <HeaderAddReport navigate={navigate} />,
+        })}
       />
     </Tab.Navigator>
   );

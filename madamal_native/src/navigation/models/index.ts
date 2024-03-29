@@ -1,10 +1,4 @@
-export enum EAppRoutes {
-  main = 'main',
-  home = 'home',
-  myProfile = 'myProfile',
-  myReports = 'myReports',
-  reportForm = 'reportForm',
-}
+import { EAppRoutes } from '@/models/routes';
 
 export const tabDisplayText: Record<EAppRoutes, string> = {
   [EAppRoutes.home]: 'בית',

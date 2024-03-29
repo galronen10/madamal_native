@@ -45,5 +45,6 @@ export const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     textAlign: 'right',
+    width: 'auto',
   },
 });

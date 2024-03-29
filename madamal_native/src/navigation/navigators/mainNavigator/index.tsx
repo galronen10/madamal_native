@@ -1,9 +1,9 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { BottomNavigator } from '../bottomNavigator';
-import { ReportFormScreen } from '@/screens';
-import { EAppRoutes } from '../../models';
 import { RootStack } from '../../utils';
+import { ReportFormScreen } from '@/screens';
+import { EAppRoutes } from '@/models/routes';
 
 export const MainNavigator = () => {
   return (

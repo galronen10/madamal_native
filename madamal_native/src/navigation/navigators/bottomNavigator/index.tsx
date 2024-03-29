@@ -3,8 +3,9 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { FontAwesome } from '@expo/vector-icons';
 
 import { HomeScreen, UserProfileScreen, UserReportsScreen } from '@/screens';
-import { EAppRoutes, tabDisplayText } from '../../models';
 import { HeaderAddReport } from '@/navigation/components';
+import { EAppRoutes } from '@/models/routes';
+import { tabDisplayText } from '@/navigation/models';
 
 const Tab = createBottomTabNavigator();
 

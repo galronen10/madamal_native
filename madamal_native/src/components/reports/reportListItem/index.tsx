@@ -5,15 +5,15 @@ import { IReport } from '@/models/reports';
 import { styles } from './styles';
 import { DeleteReportDialog } from '../deleteReportDialog';
 import { useNavigation } from '@react-navigation/native';
+import { EAppRoutes } from '@/models/routes';
 
 interface IReportListItemProps {
   report: IReport;
 }
 
 export const ReportListItem: FC<IReportListItemProps> = ({ report }) => {
-  const navigation = useNavigation();
-
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+  const navigation = useNavigation();
 
   const closeDeleteDialog = (): void => {
     setShowDeleteDialog(false);
@@ -21,6 +21,10 @@ export const ReportListItem: FC<IReportListItemProps> = ({ report }) => {
 
   const openDeleteDialog = (): void => {
     setShowDeleteDialog(true);
+  };
+
+  const openEditScreen = (): void => {
+    navigation.navigate(EAppRoutes.reportForm);
   };
 
   return (
@@ -45,14 +49,14 @@ export const ReportListItem: FC<IReportListItemProps> = ({ report }) => {
                 iconColor="black"
                 style={styles.icon}
                 icon="delete"
-                onPress={openDeleteDialog}
+                onPress={openEditScreen}
               />
               <IconButton
                 size={20}
                 iconColor="black"
                 style={styles.icon}
                 icon="pencil"
-                // onPress={() => navigation.navigate(EAppRoutes.reportForm)}
+                onPress={openEditScreen}
               />
             </View>
           )}

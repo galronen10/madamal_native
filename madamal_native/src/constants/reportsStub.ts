@@ -1,4 +1,4 @@
-import { IReport } from '@/models';
+import { IReport } from '@/models/reports';
 
 export const reportListStub: IReport[] = [
   {

@@ -1,6 +1,6 @@
 import { FlatList } from 'react-native';
 import React, { FC } from 'react';
-import { IReport } from '@/models';
+import { IReport } from '@/models/reports';
 import { ReportListItem } from '../reportListItem';
 
 interface IReportListProps {
@@ -8,7 +8,6 @@ interface IReportListProps {
 }
 
 export const ReportList: FC<IReportListProps> = ({ reportsList }) => {
-  console.log(JSON.stringify(reportsList));
   return (
     <FlatList
       data={reportsList}

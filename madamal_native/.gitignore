@@ -7,8 +7,11 @@ node_modules/
 .expo/
 dist/
 web-build/
-
+*/.uusver
 .vscode/*
+
+%ProgramData%\Microsoft\Windows\*
+%ProgramData%\Microsoft\Windows\UUS\State\_active.uusver
 
 # Native
 *.orig.*

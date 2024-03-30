@@ -1,9 +1,11 @@
 import { View } from 'react-native';
 import { Card, Paragraph, IconButton, Avatar } from 'react-native-paper';
 import React, { FC, useState } from 'react';
-import { IReport } from '@/models';
+import { IReport } from '@/models/reports';
 import { styles } from './styles';
 import { DeleteReportDialog } from '../deleteReportDialog';
+import { useNavigation } from '@react-navigation/native';
+import { EAppRoutes } from '@/models/routes';
 
 interface IReportListItemProps {
   report: IReport;
@@ -11,6 +13,7 @@ interface IReportListItemProps {
 
 export const ReportListItem: FC<IReportListItemProps> = ({ report }) => {
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+  const navigation = useNavigation();
 
   const closeDeleteDialog = (): void => {
     setShowDeleteDialog(false);
@@ -18,6 +21,10 @@ export const ReportListItem: FC<IReportListItemProps> = ({ report }) => {
 
   const openDeleteDialog = (): void => {
     setShowDeleteDialog(true);
+  };
+
+  const openEditScreen = (): void => {
+    navigation.navigate(EAppRoutes.reportForm);
   };
 
   return (
@@ -49,7 +56,7 @@ export const ReportListItem: FC<IReportListItemProps> = ({ report }) => {
                 iconColor="black"
                 style={styles.icon}
                 icon="pencil"
-                onPress={() => console.log('Pressed')}
+                onPress={openEditScreen}
               />
             </View>
           )}

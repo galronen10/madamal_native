@@ -1,9 +1,9 @@
 import { View } from 'react-native';
-import React from 'react';
+import React, { FC } from 'react';
 import { ReportList } from '@/components/reports';
 import { reportListStub } from '@/constants/reportsStub';
 
-export const HomeScreen = () => {
+export const HomeScreen: FC = () => {
   return (
     <View>
       <ReportList reportsList={reportListStub} />

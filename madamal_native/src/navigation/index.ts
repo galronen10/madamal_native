@@ -1,1 +1,1 @@
-export {} from '.';
+export { MainNavigator } from './navigators';

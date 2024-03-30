@@ -4,4 +4,5 @@ export enum EAppRoutes {
   myProfile = 'myProfile',
   myReports = 'myReports',
   reportForm = 'reportForm',
+  editUser = 'editUser',
 }

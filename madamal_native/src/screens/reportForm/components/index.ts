@@ -1,1 +1,1 @@
-export { AddReportFormBody } from './addReportFormBody';
+export { ReportFormBody } from './reportFormBody';

@@ -8,12 +8,13 @@ export const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    paddingHorizontal: 20,
-    paddingTop: 60,
   },
   formBody: {
     alignContent: 'center',
-    flex: 1,
+    display: 'flex',
     flexDirection: 'column',
+    flex: 1,
+    paddingHorizontal: 20,
+    paddingTop: 20,
   },
 });

@@ -8,24 +8,20 @@ import {
   defaultFormValues,
   schema,
 } from './formUtils';
-import { useAddDialog } from './hooks';
+import { useReportForm } from './hooks';
 import { View } from 'react-native';
 import { Button } from 'react-native-paper';
 import { styles } from './styles';
-import { AddReportFormBody } from './components';
-import { useNavigation } from '@react-navigation/native';
+import { ReportFormBody } from './components';
 
 export const ReportFormScreen: FC = () => {
-  const navigation = useNavigation();
-
   const {
     getReportForForm,
     handleSave,
     handleWrongFormData,
-    titleText,
     submitText,
     isButtonLoading,
-  } = useAddDialog();
+  } = useReportForm();
 
   const { handleSubmit, control, reset } = useForm<AddReportFormData>({
     resolver: zodResolver(schema),
@@ -36,19 +32,13 @@ export const ReportFormScreen: FC = () => {
   });
 
   useEffect(() => {
-    navigation.setOptions({
-      title: titleText,
-    });
-  }, [titleText]);
-
-  useEffect(() => {
     const func = async () => {
       const reportForForm = await getReportForForm();
       reset(reportForForm);
     };
 
     func();
-  }, [getReportForForm, , reset]);
+  }, [getReportForForm, reset]);
 
   const handleClose = useCallback(() => {
     reset();
@@ -69,7 +59,7 @@ export const ReportFormScreen: FC = () => {
   return (
     <View style={styles.container}>
       <View style={styles.formBody}>
-        <AddReportFormBody control={control} />
+        <ReportFormBody control={control} />
       </View>
       <Button
         mode="contained"

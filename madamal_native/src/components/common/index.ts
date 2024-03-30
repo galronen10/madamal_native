@@ -1,0 +1,1 @@
+export { MadaMalBanner } from './bannerImage';

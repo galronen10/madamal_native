@@ -34,7 +34,7 @@ export const TextFieldFormInput: FC<ITextFieldFormInputProps> = ({
             label={labelOverride || formData.label}
             disabled={isDisabled}
             value={value ?? ''}
-            textAlign="left"
+            textAlign="right"
             onChangeText={onChange}
             error={!!error}
           />

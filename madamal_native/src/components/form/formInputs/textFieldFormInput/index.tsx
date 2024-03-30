@@ -7,8 +7,7 @@ import { InputModeOptions, View } from 'react-native';
 interface ITextFieldFormInputProps extends IFormFieldInput {
   isMultiline?: boolean;
   inputMode?: InputModeOptions;
-  isDisabled?: boolean;
-  labelOverride?: string;
+  isPassword?: boolean;
 }
 
 export const TextFieldFormInput: FC<ITextFieldFormInputProps> = ({
@@ -16,14 +15,16 @@ export const TextFieldFormInput: FC<ITextFieldFormInputProps> = ({
   formData,
   isMultiline = false,
   inputMode = 'text',
-  isDisabled = false,
-  labelOverride,
+  isPassword = false,
 }) => {
   return (
     <Controller
       name={formData.fieldName}
       control={control}
-      render={({ field: { onChange, value }, fieldState: { error } }) => (
+      render={({
+        field: { onChange, value, disabled },
+        fieldState: { error },
+      }) => (
         <View>
           <TextInput
             inputMode={inputMode}
@@ -31,8 +32,9 @@ export const TextFieldFormInput: FC<ITextFieldFormInputProps> = ({
             multiline={isMultiline}
             style={formData.style}
             placeholder={formData.placeholder ?? ''}
-            label={labelOverride || formData.label}
-            disabled={isDisabled}
+            label={formData.label}
+            disabled={disabled}
+            secureTextEntry={isPassword}
             value={value ?? ''}
             textAlign="right"
             onChangeText={onChange}

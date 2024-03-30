@@ -4,18 +4,24 @@ import { BottomNavigator } from '../bottomNavigator';
 import { RootStack } from '../../utils';
 import { EditUserScreen, ReportFormScreen } from '@/screens';
 import { EAppRoutes } from '@/models/routes';
+import { LoginNavigator } from '../loginNavigator';
 
 export const MainNavigator = () => {
   return (
     <NavigationContainer>
-      <RootStack.Navigator>
-        <RootStack.Group>
+      <RootStack.Navigator initialRouteName={EAppRoutes.logOrRegister}>
+        <RootStack.Group
+          screenOptions={{
+            headerShown: false,
+          }}
+        >
           <RootStack.Screen
             name={EAppRoutes.main}
             component={BottomNavigator}
-            options={{
-              headerShown: false,
-            }}
+          />
+          <RootStack.Screen
+            name={EAppRoutes.logOrRegister}
+            component={LoginNavigator}
           />
         </RootStack.Group>
         <RootStack.Group screenOptions={{ presentation: 'modal' }}>

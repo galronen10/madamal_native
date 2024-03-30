@@ -4,7 +4,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import { HomeScreen, UserProfileScreen, UserReportsScreen } from '@/screens';
 import { HeaderAddReport } from '@/navigation/components';
 import { EAppRoutes } from '@/models/routes';
-import { tabDisplayText } from '@/navigation/models';
+import { titleDisplayText } from '@/navigation/models';
 
 const Tab = createBottomTabNavigator();
 
@@ -15,8 +15,8 @@ export const BottomNavigator = () => {
         tabBarActiveTintColor: 'tomato',
         tabBarInactiveTintColor: 'gray',
         headerTitleAlign: 'center',
-        title: tabDisplayText[route.name as EAppRoutes],
-        tabBarLabel: tabDisplayText[route.name as EAppRoutes],
+        title: titleDisplayText[route.name as EAppRoutes],
+        tabBarLabel: titleDisplayText[route.name as EAppRoutes],
       })}
     >
       <Tab.Screen

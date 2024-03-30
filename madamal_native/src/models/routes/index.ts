@@ -6,5 +6,6 @@ export enum EAppRoutes {
   reportForm = 'reportForm',
   editUser = 'editUser',
   login = 'login',
+  register = 'register',
   logOrRegister = 'logOrRegister',
 }

@@ -4,7 +4,7 @@ export interface IUserLoginDetails {
 }
 
 export interface IUserUpdateDto {
-  fileName: string;
+  fullName: string;
   imageUrl?: string;
 }
 

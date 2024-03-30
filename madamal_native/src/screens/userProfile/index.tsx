@@ -5,11 +5,17 @@ import { IBasicUserData } from '@/models/user';
 import { Button, TextInput } from 'react-native-paper';
 import { styles } from './styles';
 import { MadaMalBanner } from '@/components/common';
+import { useNavigation } from '@react-navigation/native';
+import { EAppRoutes } from '@/models/routes';
 
 export const UserProfileScreen: FC = () => {
   const [userData, setUserData] = useState<IBasicUserData>(userStub);
+  const navigation = useNavigation();
 
-  const goToEdit = (): void => {};
+  const goToEdit = (): void => {
+    navigation.navigate(EAppRoutes.editUser);
+  };
+
   return (
     <View style={styles.container}>
       <MadaMalBanner />

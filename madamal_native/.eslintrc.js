@@ -39,5 +39,6 @@ module.exports = {
     'import/extensions': ['error', 'never'],
     'import/no-extraneous-dependencies': ['error'],
     '@typescript-eslint/no-explicit-any': 1,
+    'react-native/no-raw-text': 0,
   },
 };

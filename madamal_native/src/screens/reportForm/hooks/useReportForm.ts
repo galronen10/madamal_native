@@ -1,11 +1,12 @@
 import { toast } from '@/utils';
 
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { AddReportFormData, defaultFormValues } from '../formUtils';
 import { IReportDTO } from '@/models/reports';
+import { useNavigation } from '@react-navigation/native';
 
 type TGetReportForFormRes = Promise<AddReportFormData>;
-interface IUseAddDialog {
+interface IUseReportForm {
   getReportForForm: () => TGetReportForFormRes;
   handleSave: (
     data: string,
@@ -13,15 +14,15 @@ interface IUseAddDialog {
     imageFileName?: string,
   ) => Promise<boolean>;
   handleWrongFormData: () => void;
-  titleText: string;
   submitText: string;
   isButtonLoading: boolean;
 }
 
-export const useAddDialog = (): IUseAddDialog => {
+export const useReportForm = (): IUseReportForm => {
   const [isButtonLoading, setIsButtonLoading] = useState<boolean>(false);
   const selectedReportId: string | undefined = undefined;
   const userId: string = '1';
+  const navigation = useNavigation();
 
   const getReportForForm = useCallback(async (): TGetReportForFormRes => {
     return defaultFormValues;
@@ -73,6 +74,8 @@ export const useAddDialog = (): IUseAddDialog => {
       // }
 
       setIsButtonLoading(false);
+      navigation.goBack();
+
       return true;
     },
     [selectedReportId, userId],
@@ -82,13 +85,14 @@ export const useAddDialog = (): IUseAddDialog => {
     toast.error('נא למלא פרטים תקינים');
   };
 
-  const titleText = useMemo(
-    () => (selectedReportId ? 'עדכן דיווח' : 'צור דיווח חדש'),
-    [selectedReportId],
-  );
+  useEffect(() => {
+    navigation.setOptions({
+      title: selectedReportId ? 'עדכון דיווח' : 'יצירת דיווח',
+    });
+  }, [selectedReportId]);
 
   const submitText = useMemo(
-    () => (selectedReportId ? 'עדכן' : 'שמור'),
+    () => (selectedReportId ? 'שמור שינויים' : 'צור דיווח'),
     [selectedReportId],
   );
 
@@ -96,7 +100,6 @@ export const useAddDialog = (): IUseAddDialog => {
     handleSave,
     handleWrongFormData,
     getReportForForm,
-    titleText,
     submitText,
     isButtonLoading,
   };

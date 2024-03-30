@@ -1,14 +1,16 @@
 import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
-  button: {
-    marginBottom: 40,
-    width: '50%',
-  },
-  container: {
+  buttonContainer: {
     alignItems: 'center',
     flex: 1,
+    justifyContent: 'flex-end',
+    width: '100%',
+  },
+  container: {
+    flex: 1,
     flexDirection: 'column',
+    paddingBottom: 40,
   },
   formBody: {
     alignContent: 'center',
@@ -17,5 +19,8 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingTop: 60,
     width: '100%',
+  },
+  loginButton: {
+    width: '50%',
   },
 });

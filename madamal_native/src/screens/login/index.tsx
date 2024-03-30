@@ -44,17 +44,19 @@ export const LoginScreen: React.FC = () => {
       <View style={styles.formBody}>
         <LoginFormBody control={control} />
       </View>
-      <Button mode="text" onPress={goToRegister}>
-        להרשמה לחץ כאן
-      </Button>
-      <Button
-        mode="contained"
-        // onPress={handleSubmit(handleValidFormData, handleWrongFormData)}
-        onPress={tempConfirm}
-        style={styles.button}
-      >
-        התחבר
-      </Button>
+      <View style={styles.buttonContainer}>
+        <Button mode="text" onPress={goToRegister}>
+          להרשמה לחץ כאן
+        </Button>
+        <Button
+          mode="contained"
+          // onPress={handleSubmit(handleValidFormData, handleWrongFormData)}
+          onPress={tempConfirm}
+          style={styles.loginButton}
+        >
+          התחבר
+        </Button>
+      </View>
     </View>
   );
 };

@@ -32,7 +32,10 @@ export const LoginScreen: React.FC = () => {
   });
 
   const tempConfirm = () => {
-    navigation.navigate(EAppRoutes.main);
+    navigation.reset({
+      index: 0,
+      routes: [{ name: EAppRoutes.main }],
+    });
   };
   const goToRegister = () => {
     navigation.navigate(EAppRoutes.register);

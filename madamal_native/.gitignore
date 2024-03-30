@@ -10,6 +10,8 @@ web-build/
 */.uusver
 .vscode/*
 
+%ProgramData%\Microsoft\Windows\*
+
 # Native
 *.orig.*
 *.jks

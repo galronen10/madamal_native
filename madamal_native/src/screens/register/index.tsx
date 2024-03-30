@@ -1,30 +1,28 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { LoginFormData, defaultFormValues, schema } from './formUtils';
-import { useHandleLogin } from './hooks';
+import { useRegisterForm } from './hooks';
+import {
+  RegisterFormData,
+  defaultFormValues,
+  registerSchema,
+} from './formUtils';
 import { MadaMalBanner } from '@/components/common';
 import { View } from 'react-native';
-import { LoginFormBody } from './components';
+import { RegisterFormBody } from './components';
 import { styles } from './styles';
 import { Button } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import { EAppRoutes } from '@/models/routes';
 
-export const LoginScreen: React.FC = () => {
-  // useEffect(() => {
-  //   if (storeUserId) {
-  //     toast.warn('הינך מחובר כעת');
-  //     navigate('/');
-  //   }
-  // }, []);
+export const RegisterScreen: React.FC = () => {
+  const { handleValidFormData, handleWrongFormData, isButtonLoading } =
+    useRegisterForm();
+
   const navigation = useNavigation();
 
-  const { handleWrongFormData, handleValidFormData, isButtonLoading } =
-    useHandleLogin();
-
-  const { handleSubmit, control } = useForm<LoginFormData>({
-    resolver: zodResolver(schema),
+  const { handleSubmit, control, reset } = useForm<RegisterFormData>({
+    resolver: zodResolver(registerSchema),
     defaultValues: defaultFormValues,
     resetOptions: {
       keepDirtyValues: false,
@@ -34,18 +32,19 @@ export const LoginScreen: React.FC = () => {
   const tempConfirm = () => {
     navigation.navigate(EAppRoutes.main);
   };
-  const goToRegister = () => {
-    navigation.navigate(EAppRoutes.register);
+
+  const goToLogin = () => {
+    navigation.navigate(EAppRoutes.login);
   };
 
   return (
     <View style={styles.container}>
       <MadaMalBanner />
       <View style={styles.formBody}>
-        <LoginFormBody control={control} />
+        <RegisterFormBody control={control} />
       </View>
-      <Button mode="text" onPress={goToRegister}>
-        להרשמה לחץ כאן
+      <Button mode="text" onPress={goToLogin}>
+        נרשמת בעבר? לחץ כאן על מנת להתחבר
       </Button>
       <Button
         mode="contained"
@@ -53,7 +52,7 @@ export const LoginScreen: React.FC = () => {
         onPress={tempConfirm}
         style={styles.button}
       >
-        התחבר
+        הרשם
       </Button>
     </View>
   );

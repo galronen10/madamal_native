@@ -8,5 +8,6 @@ export const titleDisplayText: Record<EAppRoutes, string> = {
   [EAppRoutes.reportForm]: '',
   [EAppRoutes.editUser]: '',
   [EAppRoutes.login]: 'התחברות',
+  [EAppRoutes.register]: 'הרשמה',
   [EAppRoutes.logOrRegister]: '',
 };

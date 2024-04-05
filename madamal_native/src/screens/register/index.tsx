@@ -21,20 +21,13 @@ export const RegisterScreen: React.FC = () => {
 
   const navigation = useNavigation();
 
-  const { handleSubmit, control, reset } = useForm<RegisterFormData>({
+  const { handleSubmit, control } = useForm<RegisterFormData>({
     resolver: zodResolver(registerSchema),
     defaultValues: defaultFormValues,
     resetOptions: {
       keepDirtyValues: false,
     },
   });
-
-  const tempConfirm = () => {
-    navigation.reset({
-      index: 0,
-      routes: [{ name: EAppRoutes.main }],
-    });
-  };
 
   const goToLogin = () => {
     navigation.navigate(EAppRoutes.login);
@@ -51,8 +44,7 @@ export const RegisterScreen: React.FC = () => {
       </Button>
       <Button
         mode="contained"
-        // onPress={handleSubmit(handleValidFormData, handleWrongFormData)}
-        onPress={tempConfirm}
+        onPress={handleSubmit(handleValidFormData, handleWrongFormData)}
         style={styles.button}
       >
         הרשם

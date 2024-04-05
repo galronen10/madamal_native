@@ -12,12 +12,6 @@ import { useNavigation } from '@react-navigation/native';
 import { EAppRoutes } from '@/models/routes';
 
 export const LoginScreen: React.FC = () => {
-  // useEffect(() => {
-  //   if (storeUserId) {
-  //     toast.warn('הינך מחובר כעת');
-  //     navigate('/');
-  //   }
-  // }, []);
   const navigation = useNavigation();
 
   const { handleWrongFormData, handleValidFormData, isButtonLoading } =
@@ -31,12 +25,6 @@ export const LoginScreen: React.FC = () => {
     },
   });
 
-  const tempConfirm = () => {
-    navigation.reset({
-      index: 0,
-      routes: [{ name: EAppRoutes.main }],
-    });
-  };
   const goToRegister = () => {
     navigation.navigate(EAppRoutes.register);
   };
@@ -53,8 +41,7 @@ export const LoginScreen: React.FC = () => {
         </Button>
         <Button
           mode="contained"
-          // onPress={handleSubmit(handleValidFormData, handleWrongFormData)}
-          onPress={tempConfirm}
+          onPress={handleSubmit(handleValidFormData, handleWrongFormData)}
           style={styles.loginButton}
         >
           התחבר

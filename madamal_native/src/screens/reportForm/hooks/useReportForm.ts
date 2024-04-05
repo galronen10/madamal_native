@@ -1,11 +1,16 @@
 import { toast } from '@/utils';
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { AddReportFormData, defaultFormValues } from '../formUtils';
-import { IReportDTO } from '@/models/reports';
+import {
+  AddReportFormData,
+  EAddReportFields,
+  defaultFormValues,
+} from '../formUtils';
+import { IReport, IReportDTO } from '@/models/reports';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { useAppSelector } from '@/hooks/store';
 import { selectUserId } from '@/redux/user';
+import { api } from '@/api';
 
 type TGetReportForFormRes = Promise<AddReportFormData>;
 interface IUseReportForm {
@@ -34,13 +39,14 @@ export const useReportForm = (): IUseReportForm => {
   const getReportForForm = useCallback(async (): TGetReportForFormRes => {
     if (!selectedReportId) return defaultFormValues;
 
-    return defaultFormValues;
-    // const report: IReport = await api.report.getById(selectedReportId);
+    const report: IReport = await api.report.getById(
+      selectedReportId.toString(),
+    );
 
-    // return {
-    //   [EAddReportFields.DATA]: report.data,
-    //   [EAddReportFields.DEFAULT_IMAGE_NAME]: report.image,
-    // };
+    return {
+      [EAddReportFields.DATA]: report.data,
+      [EAddReportFields.DEFAULT_IMAGE_NAME]: report.image,
+    };
   }, [selectedReportId]);
 
   const handleSave = useCallback(

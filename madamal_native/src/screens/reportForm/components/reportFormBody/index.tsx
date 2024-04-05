@@ -23,7 +23,7 @@ export const ReportFormBody: FC<IReportFormBodyProps> = ({ control }) => {
       <ImageFormInput
         control={control}
         formData={addReportFormDataObject[EAddReportFields.IMAGE]}
-        defaultImageName={defaultImageName}
+        defaultImageUri={defaultImageName}
       />
     </>
   );

@@ -3,6 +3,8 @@ import { ERegisterFields, RegisterFormData } from '../formUtils';
 import { toast } from '@/utils';
 import { useNavigation } from '@react-navigation/native';
 import { IUserRegister } from '@/models/user';
+import { EAppRoutes } from '@/models/routes';
+import { api } from '@/api';
 
 interface IUseRegisterForm {
   handleValidFormData: (formData: RegisterFormData) => Promise<void>;
@@ -29,15 +31,14 @@ export const useRegisterForm = (): IUseRegisterForm => {
     if (imageName) registerDto.imageUrl = imageName;
 
     try {
-      // const response = await api.auth.register(registerDto);
-      // if (response.status === 201) {
-      //   toast.success('המשתמש נוצר בהצלחה');
-      //   navigation.navigate(EAppRoutes.login);
-      // } else {
-      //   toast.error('אירעה שגיאה ביצירת המשתמש');
-      // }
+      await api.auth.register(registerDto);
+      toast.success('המשתמש נוצר בהצלחה');
+      navigation.reset({
+        index: 0,
+        routes: [{ name: EAppRoutes.main }],
+      });
     } catch (error: any) {
-      if (error.response.status === 406) {
+      if (error.status === 406) {
         toast.error('משתמש כבר קיים');
       } else {
         console.error('Error during signup:', error);
@@ -56,7 +57,7 @@ export const useRegisterForm = (): IUseRegisterForm => {
       // if (imageFile) {
       //   serverFileName = await uploadImage(imageFile);
       // }
-      // await finishRegisterLogic(formData, serverFileName);
+      await finishRegisterLogic(formData);
     } catch (error: any) {
       toast.error('אירעה שגיאה בשמירת התמונה בשרת, אנא נסה שנית');
     } finally {

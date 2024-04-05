@@ -8,12 +8,13 @@ import { IconButton, Text } from 'react-native-paper';
 import { styles } from './style';
 
 interface IImageFormInputProps extends IFormFieldInput {
-  defaultImageName?: string;
+  defaultImageUri?: string;
 }
 
 export const ImageFormInput: FC<IImageFormInputProps> = ({
   control,
   formData,
+  defaultImageUri,
 }) => {
   const { handlePickFromCamera, handlePickFromGallery } = useImageInputForm();
 
@@ -41,10 +42,10 @@ export const ImageFormInput: FC<IImageFormInputProps> = ({
               <Text variant="bodyMedium">{formData.label}:</Text>
             )}
           </View>
-          {value && (
+          {(value || defaultImageUri) && (
             <Image
               style={styles.image}
-              source={{ uri: value }}
+              source={{ uri: value ? value : defaultImageUri }}
               resizeMode="contain"
             />
           )}

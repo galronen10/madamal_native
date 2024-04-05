@@ -39,7 +39,9 @@ export const useReportForm = (): IUseReportForm => {
   const getReportForForm = useCallback(async (): TGetReportForFormRes => {
     if (!selectedReportId) return defaultFormValues;
 
-    const report: IReport = await api.report.getById(selectedReportId);
+    const report: IReport = await api.report.getById(
+      selectedReportId.toString(),
+    );
 
     return {
       [EAddReportFields.DATA]: report.data,

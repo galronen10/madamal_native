@@ -37,7 +37,7 @@ export const api = {
         data.password,
       );
 
-      const docRef = doc(reportCollectionRef, data.email);
+      const docRef = doc(userCollectionRef, data.email);
 
       await setDoc(docRef, {
         fullName: data.fullName,

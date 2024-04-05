@@ -28,7 +28,8 @@ export const reportsSlice = createSlice({
 export const { setReports } = reportsSlice.actions;
 
 export const selectAllReports = (state: RootState) => state.reports.reports;
-export const selectReportsofLoggedUser = createSelector(
+
+export const selectReportsOfLoggedUser = createSelector(
   [selectAllReports, selectUserId],
   (reports: IReport[], userId: string): IReport[] =>
     reports.filter((report) => report.ownerId === userId),

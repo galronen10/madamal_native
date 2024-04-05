@@ -1,15 +1,15 @@
 import { View, Image, Text } from 'react-native';
-import React, { FC, useState } from 'react';
-import { userStub } from '@/constants/userStub';
-import { IBasicUserData } from '@/models/user';
+import React, { FC } from 'react';
 import { Button, TextInput } from 'react-native-paper';
 import { styles } from './styles';
 import { MadaMalBanner } from '@/components/common';
 import { useNavigation } from '@react-navigation/native';
 import { EAppRoutes } from '@/models/routes';
+import { useAppSelector } from '@/hooks/store';
+import { selectUser } from '@/redux/user';
 
 export const UserProfileScreen: FC = () => {
-  const [userData, setUserData] = useState<IBasicUserData>(userStub);
+  const userData = useAppSelector(selectUser);
   const navigation = useNavigation();
 
   const goToEdit = (): void => {

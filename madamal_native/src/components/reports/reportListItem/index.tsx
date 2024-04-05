@@ -24,7 +24,7 @@ export const ReportListItem: FC<IReportListItemProps> = ({ report }) => {
   };
 
   const openEditScreen = (): void => {
-    navigation.navigate(EAppRoutes.reportForm);
+    navigation.navigate(EAppRoutes.reportForm, { reportId: report.id });
   };
 
   return (
@@ -75,6 +75,7 @@ export const ReportListItem: FC<IReportListItemProps> = ({ report }) => {
       <DeleteReportDialog
         handleClose={closeDeleteDialog}
         isVisible={showDeleteDialog}
+        reportId={report.id}
       />
     </View>
   );

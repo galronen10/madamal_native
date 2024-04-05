@@ -12,12 +12,6 @@ import { useNavigation } from '@react-navigation/native';
 import { EAppRoutes } from '@/models/routes';
 
 export const LoginScreen: React.FC = () => {
-  // useEffect(() => {
-  //   if (storeUserId) {
-  //     toast.warn('הינך מחובר כעת');
-  //     navigate('/');
-  //   }
-  // }, []);
   const navigation = useNavigation();
 
   const { handleWrongFormData, handleValidFormData, isButtonLoading } =

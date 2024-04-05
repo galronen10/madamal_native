@@ -1,6 +1,6 @@
 import { toast } from '@/utils';
 import { LoginFormData } from '../formUtils';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { EAppRoutes } from '@/models/routes';
 import { useDispatch } from 'react-redux';
@@ -18,6 +18,21 @@ export const useHandleLogin = (): IUseHandleLogin => {
   const [isButtonLoading, setIsButtonLoading] = useState<boolean>(false);
   const navigation = useNavigation();
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    // Check if user is already logged in
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        dispatch(updateUser({ userId: user.providerId }));
+        navigation.reset({
+          index: 0,
+          routes: [{ name: EAppRoutes.main }],
+        });
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   const onLoginSuccess = async (userId: string | null) => {
     if (!userId) {

@@ -2,7 +2,6 @@ import { IReport } from '@/models/reports';
 import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '..';
 import { selectUserId } from '../user';
-import { reportListStub } from '@/constants/reportsStub';
 
 // Define a type for the slice state
 interface ReportsState {
@@ -11,7 +10,7 @@ interface ReportsState {
 
 // Define the initial state using that type
 const initialState: ReportsState = {
-  reports: reportListStub,
+  reports: [],
 };
 
 export const reportsSlice = createSlice({

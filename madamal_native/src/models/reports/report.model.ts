@@ -1,6 +1,6 @@
 export interface IReport {
   id: number;
-  ownerId: number;
+  ownerId: string;
   data: string;
   image?: string;
 }

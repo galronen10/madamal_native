@@ -1,9 +1,11 @@
 import { useCallback, useEffect, useState } from 'react';
 import { EEditUserFields, EditUserFormData } from '../formUtils';
 import { useNavigation } from '@react-navigation/native';
-import { userStub } from '@/constants/userStub';
-import { StoreUser } from '@/models/user';
 import { toast } from '@/utils';
+import { useDispatch } from 'react-redux';
+import { useAppSelector } from '@/hooks/store';
+import { selectUser, updateUser } from '@/redux/user';
+import { IUserUpdateDto } from '@/models/user';
 
 interface IUseEditUser {
   handleValidFormData: (formData: EditUserFormData) => Promise<void>;
@@ -14,7 +16,8 @@ interface IUseEditUser {
 
 export const useEditUser = (): IUseEditUser => {
   const [isButtonLoading, setIsButtonLoading] = useState<boolean>(false);
-  const [userData, setUserData] = useState<StoreUser>(userStub);
+  const userData = useAppSelector(selectUser);
+  const dispatch = useDispatch();
 
   const navigation = useNavigation();
 
@@ -25,40 +28,43 @@ export const useEditUser = (): IUseEditUser => {
     };
   }, [userData]);
 
-  // const finishUpdateLogic = async (fullname: string, imageName?: string) => {
-  //   const userDto: UserUpdateDto = {
-  //     fullname,
-  //   };
+  const finishUpdateLogic = async (fullName: string, imageName?: string) => {
+    const userDto: IUserUpdateDto = {
+      fullName,
+    };
 
-  //   if (imageName) userDto.imageUrl = imageName;
+    if (imageName) userDto.imageUrl = imageName;
 
-  //   try {
-  //     await api.user.update(userDto);
-  //     dispatch(upadteUser(userDto));
+    try {
+      // await api.user.update(userDto);
+      dispatch(updateUser(userDto));
 
-  //     toast.success('הפרטים עודכנו בהצלחה');
-  //   } catch (error: any) {
-  //     toast.error('אירעה שגיאה בעדכון הפרטים');
-  //   }
-  // };
+      toast.success('הפרטים עודכנו בהצלחה');
+    } catch (error: any) {
+      toast.error('אירעה שגיאה בעדכון הפרטים');
+    }
+  };
 
   const handleValidFormData = async (
     formData: EditUserFormData,
   ): Promise<void> => {
-    // const imageFile = formData[EUserFields.IMAGE];
-    // setIsButtonLoading(true);
-    // try {
-    //   let serverFileName = '';
-    //   if (imageFile) {
-    //     serverFileName = await uploadImage(imageFile);
-    //   }
-    //   await finishUpdateLogic(formData[EUserFields.FULL_NAME], serverFileName)
-    // } catch (error: any) {
-    //   toast.error('אירעה שגיאה בשמירת התמונה בשרת, אנא נסה שנית');
-    // } finally {
-    //   setIsButtonLoading(false);
-    // }
-    navigation.goBack();
+    const imageFile = formData[EEditUserFields.IMAGE];
+    setIsButtonLoading(true);
+    try {
+      const serverFileName = '';
+      if (imageFile) {
+        // serverFileName = await uploadImage(imageFile);
+      }
+      await finishUpdateLogic(
+        formData[EEditUserFields.FULL_NAME],
+        serverFileName,
+      );
+      navigation.goBack();
+    } catch (error: any) {
+      toast.error('אירעה שגיאה בשמירת התמונה בשרת, אנא נסה שנית');
+    } finally {
+      setIsButtonLoading(false);
+    }
   };
 
   const handleWrongFormData = (): void => {

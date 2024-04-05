@@ -6,15 +6,17 @@ import { Portal, Dialog, Text, Button } from 'react-native-paper';
 interface IDeleteReportDialogProps {
   isVisible: boolean;
   handleClose: () => void;
+  reportId: number;
 }
 
 export const DeleteReportDialog: FC<IDeleteReportDialogProps> = ({
   handleClose,
   isVisible,
+  reportId,
 }) => {
   const onDelete = () => {
     // Implement delete logic here
-    console.log('Post deleted');
+    console.log('report deleted:' + reportId);
     handleClose();
   };
 

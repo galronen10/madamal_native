@@ -12,7 +12,7 @@ export const ReportList: FC<IReportListProps> = ({ reportsList }) => {
     <FlatList
       data={reportsList}
       renderItem={({ item }) => <ReportListItem report={item} />}
-      keyExtractor={(item) => item.id.toString()}
+      keyExtractor={(item) => item?.id?.toString() ?? 'q'}
     />
   );
 };

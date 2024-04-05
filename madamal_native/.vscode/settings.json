@@ -1,4 +1,11 @@
 {
-  "cSpell.words": ["Ionicons", "Pressable", "reduxjs", "אימייל", "דיווח"],
+  "cSpell.words": [
+    "firestore",
+    "Ionicons",
+    "Pressable",
+    "reduxjs",
+    "אימייל",
+    "דיווח"
+  ],
   "files.trimTrailingWhitespace": true
 }

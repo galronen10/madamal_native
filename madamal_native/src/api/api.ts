@@ -1,14 +1,16 @@
-import { IReportDTO } from '@/models/reports';
+import { IReport, IReportDTO } from '@/models/reports';
+import { database } from 'config/firebase';
+import { collection, doc, getDoc } from 'firebase/firestore';
 
-export const REFETCH_INTERVAL = 3000;
-
-// export const reportCollection: TReportCollection =
-//   firestore().collection('collection_name');
+export const reportCollectionRef = collection(database, 'reports');
 
 export const api = {
   report: {
     // getAll: (): Promise<TReportQuery> => reportCollection.get(),
-    getById: async (reportId: string) => {},
+    getById: async (reportId: string): Promise<IReport> => {
+      const docRef = doc(reportCollectionRef, reportId);
+      return (await getDoc(docRef)).data() as IReport;
+    },
     deleteReport: async (reportId: string): Promise<void> => {},
     addReport: async (reportDTO: IReportDTO): Promise<void> => {},
     updateReport: async (reportDTO: IReportDTO): Promise<void> => {},

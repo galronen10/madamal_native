@@ -31,12 +31,6 @@ export const LoginScreen: React.FC = () => {
     },
   });
 
-  const tempConfirm = () => {
-    navigation.reset({
-      index: 0,
-      routes: [{ name: EAppRoutes.main }],
-    });
-  };
   const goToRegister = () => {
     navigation.navigate(EAppRoutes.register);
   };
@@ -53,8 +47,7 @@ export const LoginScreen: React.FC = () => {
         </Button>
         <Button
           mode="contained"
-          // onPress={handleSubmit(handleValidFormData, handleWrongFormData)}
-          onPress={tempConfirm}
+          onPress={handleSubmit(handleValidFormData, handleWrongFormData)}
           style={styles.loginButton}
         >
           התחבר

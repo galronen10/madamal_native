@@ -1,8 +1,8 @@
+import { reportCollectionRef } from '@/api';
 import { IReport } from '@/models/reports';
 import { MainNavigator } from '@/navigation';
 import { setReports } from '@/redux/reports';
-import { collection, onSnapshot, query } from '@firebase/firestore';
-import { database } from 'config/firebase';
+import { onSnapshot, query } from 'firebase/firestore';
 import React, { FC, useEffect } from 'react';
 import Toast from 'react-native-toast-message';
 import { useDispatch } from 'react-redux';
@@ -12,7 +12,7 @@ export const Main: FC = () => {
 
   useEffect(() => {
     const subscriber = onSnapshot(
-      query(collection(database, 'reports')),
+      query(reportCollectionRef),
       (reportsSnapshot) => {
         const reports: IReport[] = [];
         reportsSnapshot.forEach((documentSnapshot) => {

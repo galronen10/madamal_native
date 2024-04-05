@@ -1,8 +1,16 @@
 import { IReport, IReportDTO } from '@/models/reports';
-import { database } from 'config/firebase';
-import { collection, doc, getDoc } from 'firebase/firestore';
+import { IUserRegister } from '@/models/user';
+import { auth, database } from 'config/firebase';
+import {
+  UserCredential,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+} from 'firebase/auth';
+import { collection, doc, getDoc, setDoc, deleteDoc } from 'firebase/firestore';
 
 export const reportCollectionRef = collection(database, 'reports');
+export const userCollectionRef = collection(database, 'users');
 
 export const api = {
   report: {
@@ -11,23 +19,35 @@ export const api = {
       const docRef = doc(reportCollectionRef, reportId);
       return (await getDoc(docRef)).data() as IReport;
     },
-    deleteReport: async (reportId: string): Promise<void> => {},
+    deleteReport: async (reportId: string): Promise<void> => {
+      const docRef = doc(reportCollectionRef, reportId);
+      return deleteDoc(docRef);
+    },
     addReport: async (reportDTO: IReportDTO): Promise<void> => {},
     updateReport: async (reportDTO: IReportDTO): Promise<void> => {},
   },
   image: {
     uploadImage: async (image: FormData, imageName?: string) => {},
   },
-  // auth: {
-  //   register: async (
-  //     data: UserRegister,
-  //   ): Promise<AxiosResponse<UserRegister>> => {},
-  //   login: async (
-  //     details: UserLoginDeatils,
-  //   ): Promise<AxiosResponse<LoginDecodedData>> => {},
-  //   logout: async (): Promise<AxiosResponse<void>> => {},
-  //   refresh: async (): Promise<AxiosResponse<LoginDecodedData>> => {},
-  // },
+  auth: {
+    register: async (data: IUserRegister): Promise<void> => {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        data.email,
+        data.password,
+      );
+
+      const docRef = doc(reportCollectionRef, data.email);
+
+      await setDoc(docRef, {
+        fullName: data.fullName,
+        uid: userCredential.user.uid,
+      });
+    },
+    login: async (email: string, password: string): Promise<UserCredential> =>
+      signInWithEmailAndPassword(auth, email, password),
+    logout: async (): Promise<void> => signOut(auth),
+  },
   // user: {
   //   getById: async (userId: string): Promise<UserDto> => {},
   //   update: async (

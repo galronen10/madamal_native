@@ -6,7 +6,7 @@ import { EAppRoutes } from '@/models/routes';
 import { useDispatch } from 'react-redux';
 import { updateUser } from '@/redux/user';
 import { auth } from 'config/firebase';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { api } from '@/api';
 
 interface IUseHandleLogin {
   handleValidFormData: (formData: LoginFormData) => Promise<void>;
@@ -59,7 +59,7 @@ export const useHandleLogin = (): IUseHandleLogin => {
 
     const { email, password } = formData;
     try {
-      const response = await signInWithEmailAndPassword(auth, email, password);
+      const response = await api.auth.login(email, password);
       console.log(response);
       await onLoginSuccess(response.providerId);
     } catch (error: any) {

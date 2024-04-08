@@ -35,7 +35,7 @@ export const useRegisterForm = (): IUseRegisterForm => {
       toast.success('המשתמש נוצר בהצלחה');
       navigation.reset({
         index: 0,
-        routes: [{ name: EAppRoutes.main }],
+        routes: [{ name: EAppRoutes.login }],
       });
     } catch (error: any) {
       if (error.status === 406) {

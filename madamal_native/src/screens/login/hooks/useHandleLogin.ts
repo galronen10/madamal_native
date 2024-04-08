@@ -1,11 +1,10 @@
 import { toast } from '@/utils';
 import { LoginFormData } from '../formUtils';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { EAppRoutes } from '@/models/routes';
 import { useDispatch } from 'react-redux';
 import { updateUser } from '@/redux/user';
-import { auth } from 'config/firebase';
 import { api } from '@/api';
 
 interface IUseHandleLogin {
@@ -19,20 +18,19 @@ export const useHandleLogin = (): IUseHandleLogin => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    // Check if user is already logged in
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user) {
-        dispatch(updateUser({ userId: user.providerId }));
-        navigation.reset({
-          index: 0,
-          routes: [{ name: EAppRoutes.main }],
-        });
-      }
-    });
+  // useEffect(() => {
+  //   // Check if user is already logged in
+  //   const unsubscribe = auth.onAuthStateChanged((user) => {
+  //     if (user) {
+  //       navigation.reset({
+  //         index: 0,
+  //         routes: [{ name: EAppRoutes.main }],
+  //       });
+  //     }
+  //   });
 
-    return () => unsubscribe();
-  }, []);
+  //   return () => unsubscribe();
+  // }, []);
 
   const onLoginSuccess = async (userId: string | null) => {
     if (!userId) {
@@ -60,8 +58,7 @@ export const useHandleLogin = (): IUseHandleLogin => {
     const { email, password } = formData;
     try {
       const response = await api.auth.login(email, password);
-      console.log(response);
-      await onLoginSuccess(response.providerId);
+      await onLoginSuccess(response.user.uid);
     } catch (error: any) {
       setIsButtonLoading(false);
 

@@ -37,15 +37,18 @@ export const api = {
         data.password,
       );
 
-      const docRef = doc(userCollectionRef, data.email);
+      const docRef = doc(userCollectionRef, userCredential.user.uid);
 
       await setDoc(docRef, {
         fullName: data.fullName,
         uid: userCredential.user.uid,
+        email: data.email,
       });
     },
-    login: async (email: string, password: string): Promise<UserCredential> =>
-      signInWithEmailAndPassword(auth, email, password),
+    login: async (email: string, password: string): Promise<UserCredential> => {
+      // eslint-disable-next-line @typescript-eslint/return-await
+      return await signInWithEmailAndPassword(auth, email, password);
+    },
     logout: async (): Promise<void> => signOut(auth),
   },
   // user: {

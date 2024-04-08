@@ -2,6 +2,8 @@
 import React, { FC } from 'react';
 import { styles } from './styles';
 import { Portal, Dialog, Text, Button } from 'react-native-paper';
+import { toast } from '@/utils';
+import { api } from '@/api';
 
 interface IDeleteReportDialogProps {
   isVisible: boolean;
@@ -14,10 +16,14 @@ export const DeleteReportDialog: FC<IDeleteReportDialogProps> = ({
   isVisible,
   reportId,
 }) => {
-  const onDelete = () => {
-    // Implement delete logic here
-    console.log('report deleted:' + reportId);
-    handleClose();
+  const onDelete = async () => {
+    try {
+      await api.report.deleteReport(reportId.toString());
+      console.log('report deleted:' + reportId);
+      handleClose();
+    } catch (error: any) {
+      toast.error('אירעה שגיאה במחיקת הדיווח');
+    }
   };
 
   return (

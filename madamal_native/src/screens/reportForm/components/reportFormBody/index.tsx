@@ -16,6 +16,10 @@ export const ReportFormBody: FC<IReportFormBodyProps> = ({ control }) => {
   return (
     <>
       <TextFieldFormInput
+        control={control}
+        formData={addReportFormDataObject[EAddReportFields.TITLE]}
+      />
+      <TextFieldFormInput
         isMultiline
         control={control}
         formData={addReportFormDataObject[EAddReportFields.DATA]}

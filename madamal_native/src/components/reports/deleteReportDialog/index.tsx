@@ -8,7 +8,7 @@ import { api } from '@/api';
 interface IDeleteReportDialogProps {
   isVisible: boolean;
   handleClose: () => void;
-  reportId: number;
+  reportId: string;
 }
 
 export const DeleteReportDialog: FC<IDeleteReportDialogProps> = ({
@@ -18,7 +18,7 @@ export const DeleteReportDialog: FC<IDeleteReportDialogProps> = ({
 }) => {
   const onDelete = async () => {
     try {
-      await api.report.deleteReport(reportId.toString());
+      await api.report.deleteReport(reportId);
       console.log('report deleted:' + reportId);
       handleClose();
     } catch (error: any) {

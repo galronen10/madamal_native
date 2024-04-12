@@ -6,7 +6,7 @@ import { HeaderAddReport, LogoutButton } from '@/navigation/components';
 import { EAppRoutes } from '@/models/routes';
 import { titleDisplayText } from '@/navigation/models';
 import { api, reportCollectionRef } from '@/api';
-import { IReport } from '@/models/reports';
+import { IReport, IReportInDb as IReportInDB } from '@/models/reports';
 import { setReports } from '@/redux/reports';
 import { Unsubscribe, onSnapshot, query } from 'firebase/firestore';
 import { useDispatch } from 'react-redux';
@@ -25,7 +25,16 @@ export const BottomNavigator: FC = () => {
       onSnapshot(query(reportCollectionRef), (reportsSnapshot) => {
         const reports: IReport[] = [];
         reportsSnapshot.forEach((documentSnapshot) => {
-          reports.push({ ...(documentSnapshot.data() as IReport) });
+          const reportFromDb = documentSnapshot.data() as IReportInDB;
+
+          reports.push({
+            data: reportFromDb.data,
+            image: reportFromDb.image,
+            title: reportFromDb.title,
+            userId: reportFromDb.userId,
+            lastUpdated: new Date(reportFromDb.lastUpdated),
+            id: documentSnapshot.id,
+          });
         });
 
         dispatch(setReports(reports));

@@ -45,6 +45,7 @@ export const useReportForm = (): IUseReportForm => {
 
     return {
       [EAddReportFields.DATA]: report.data,
+      [EAddReportFields.TITLE]: report.title,
       [EAddReportFields.DEFAULT_IMAGE_NAME]: report.image,
     };
   }, [selectedReportId]);

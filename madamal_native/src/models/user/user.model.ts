@@ -3,12 +3,10 @@ export interface IUserLoginDetails {
   password: string;
 }
 
-export interface IUserUpdateDto {
+export interface IUserRegister extends IUserLoginDetails {
   fullName: string;
   imageUrl?: string;
 }
-
-export type IUserRegister = IUserUpdateDto & IUserLoginDetails;
 
 export interface IUserFromDb {
   uid: string;

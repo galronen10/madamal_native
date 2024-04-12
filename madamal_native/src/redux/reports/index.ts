@@ -32,7 +32,7 @@ export const selectReportsOfLoggedUser = createSelector(
   [selectAllReports, selectUserId],
   (reports: IReport[], userId: string): IReport[] =>
     reports.filter(
-      (report) => report.ownerId === 'AqlnjyKRexOe59UPWtCxXAtAer43',
+      (report) => report.userId === 'AqlnjyKRexOe59UPWtCxXAtAer43',
     ),
 );
 export const selectReportById = (reportId: number) =>

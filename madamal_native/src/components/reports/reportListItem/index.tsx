@@ -1,5 +1,5 @@
 import { View } from 'react-native';
-import { Card, Paragraph, IconButton, Avatar } from 'react-native-paper';
+import { Card, Paragraph, IconButton } from 'react-native-paper';
 import React, { FC, useState } from 'react';
 import { IReport } from '@/models/reports';
 import { styles } from './styles';
@@ -33,18 +33,12 @@ export const ReportListItem: FC<IReportListItemProps> = ({ report }) => {
       <Card style={styles.card}>
         <Card.Title
           style={styles.header}
-          title={report.ownerId}
+          title={report.title}
           titleStyle={styles.username}
-          // subtitle={postTime}
-          right={() => (
-            <Avatar.Image
-              style={styles.profileImage}
-              size={50}
-              source={{ uri: 'https://via.placeholder.com/50' }}
-            />
-          )}
+          subtitle={report.lastUpdated.toLocaleDateString()}
+          subtitleStyle={styles.reportTime}
           left={() =>
-            report.ownerId === auth.currentUser?.uid && (
+            report.userId === auth.currentUser?.uid && (
               <View style={styles.actions}>
                 <IconButton
                   size={20}

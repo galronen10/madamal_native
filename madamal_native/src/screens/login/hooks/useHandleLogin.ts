@@ -10,6 +10,7 @@ import { api } from '@/api';
 interface IUseHandleLogin {
   handleValidFormData: (formData: LoginFormData) => Promise<void>;
   handleWrongFormData: () => void;
+  goToRegister: () => void;
   isButtonLoading: boolean;
 }
 
@@ -17,20 +18,6 @@ export const useHandleLogin = (): IUseHandleLogin => {
   const [isButtonLoading, setIsButtonLoading] = useState<boolean>(false);
   const navigation = useNavigation();
   const dispatch = useDispatch();
-
-  // useEffect(() => {
-  //   // Check if user is already logged in
-  //   const unsubscribe = auth.onAuthStateChanged((user) => {
-  //     if (user) {
-  //       navigation.reset({
-  //         index: 0,
-  //         routes: [{ name: EAppRoutes.main }],
-  //       });
-  //     }
-  //   });
-
-  //   return () => unsubscribe();
-  // }, []);
 
   const onLoginSuccess = async (userId: string | null) => {
     if (!userId) {
@@ -75,9 +62,14 @@ export const useHandleLogin = (): IUseHandleLogin => {
     toast.error('נא למלא פרטים תקינים');
   };
 
+  const goToRegister = () => {
+    navigation.navigate(EAppRoutes.register);
+  };
+
   return {
     isButtonLoading,
     handleWrongFormData,
     handleValidFormData,
+    goToRegister,
   };
 };

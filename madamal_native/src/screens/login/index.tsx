@@ -8,14 +8,14 @@ import { View } from 'react-native';
 import { LoginFormBody } from './components';
 import { styles } from './styles';
 import { Button } from 'react-native-paper';
-import { useNavigation } from '@react-navigation/native';
-import { EAppRoutes } from '@/models/routes';
 
 export const LoginScreen: React.FC = () => {
-  const navigation = useNavigation();
-
-  const { handleWrongFormData, handleValidFormData, isButtonLoading } =
-    useHandleLogin();
+  const {
+    handleWrongFormData,
+    handleValidFormData,
+    isButtonLoading,
+    goToRegister,
+  } = useHandleLogin();
 
   const { handleSubmit, control } = useForm<LoginFormData>({
     resolver: zodResolver(schema),
@@ -24,10 +24,6 @@ export const LoginScreen: React.FC = () => {
       keepDirtyValues: false,
     },
   });
-
-  const goToRegister = () => {
-    navigation.navigate(EAppRoutes.register);
-  };
 
   return (
     <View style={styles.container}>

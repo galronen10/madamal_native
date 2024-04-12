@@ -8,4 +8,5 @@ export enum EAppRoutes {
   login = 'login',
   register = 'register',
   logOrRegister = 'logOrRegister',
+  splash = 'splash',
 }

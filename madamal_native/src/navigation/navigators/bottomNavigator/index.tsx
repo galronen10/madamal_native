@@ -2,7 +2,7 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { FontAwesome } from '@expo/vector-icons';
 import { HomeScreen, UserProfileScreen, UserReportsScreen } from '@/screens';
-import { HeaderAddReport } from '@/navigation/components';
+import { HeaderAddReport, LogoutButton } from '@/navigation/components';
 import { EAppRoutes } from '@/models/routes';
 import { titleDisplayText } from '@/navigation/models';
 
@@ -17,6 +17,8 @@ export const BottomNavigator = () => {
         headerTitleAlign: 'center',
         title: titleDisplayText[route.name as EAppRoutes],
         tabBarLabel: titleDisplayText[route.name as EAppRoutes],
+        // headerStyle: styles.header,
+        headerRight: LogoutButton,
       })}
     >
       <Tab.Screen

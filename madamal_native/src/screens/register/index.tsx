@@ -12,14 +12,14 @@ import { View } from 'react-native';
 import { RegisterFormBody } from './components';
 import { styles } from './styles';
 import { Button } from 'react-native-paper';
-import { useNavigation } from '@react-navigation/native';
-import { EAppRoutes } from '@/models/routes';
 
 export const RegisterScreen: React.FC = () => {
-  const { handleValidFormData, handleWrongFormData, isButtonLoading } =
-    useRegisterForm();
-
-  const navigation = useNavigation();
+  const {
+    handleValidFormData,
+    handleWrongFormData,
+    isButtonLoading,
+    goToLogin,
+  } = useRegisterForm();
 
   const { handleSubmit, control } = useForm<RegisterFormData>({
     resolver: zodResolver(registerSchema),
@@ -28,10 +28,6 @@ export const RegisterScreen: React.FC = () => {
       keepDirtyValues: false,
     },
   });
-
-  const goToLogin = () => {
-    navigation.navigate(EAppRoutes.login);
-  };
 
   return (
     <View style={styles.container}>

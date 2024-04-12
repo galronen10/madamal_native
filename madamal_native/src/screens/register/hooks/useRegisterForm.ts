@@ -9,6 +9,7 @@ import { api } from '@/api';
 interface IUseRegisterForm {
   handleValidFormData: (formData: RegisterFormData) => Promise<void>;
   handleWrongFormData: () => void;
+  goToLogin: () => void;
   isButtonLoading: boolean;
 }
 
@@ -69,9 +70,14 @@ export const useRegisterForm = (): IUseRegisterForm => {
     toast.error('נא למלא פרטים תקינים');
   };
 
+  const goToLogin = (): void => {
+    navigation.navigate(EAppRoutes.login);
+  };
+
   return {
     handleWrongFormData,
     handleValidFormData,
     isButtonLoading,
+    goToLogin,
   };
 };

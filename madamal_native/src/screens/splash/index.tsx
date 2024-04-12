@@ -1,9 +1,17 @@
 import React, { FC, useEffect } from 'react';
-import { View } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { auth } from 'config/firebase';
 import { ActivityIndicator } from 'react-native-paper';
 import { EAppRoutes } from '@/models/routes';
+
+const styles = StyleSheet.create({
+  container: {
+    alignItems: 'center',
+    flex: 1,
+    justifyContent: 'center',
+  },
+});
 
 export const SplashScreen: FC = () => {
   const navigation = useNavigation();
@@ -20,8 +28,8 @@ export const SplashScreen: FC = () => {
   }, []);
 
   return (
-    <View>
-      <ActivityIndicator />
+    <View style={styles.container}>
+      <ActivityIndicator size={100} />
     </View>
   );
 };

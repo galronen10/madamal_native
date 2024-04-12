@@ -6,6 +6,7 @@ import { styles } from './styles';
 import { DeleteReportDialog } from '../deleteReportDialog';
 import { useNavigation } from '@react-navigation/native';
 import { EAppRoutes } from '@/models/routes';
+import { auth } from 'config/firebase';
 
 interface IReportListItemProps {
   report: IReport;
@@ -42,24 +43,26 @@ export const ReportListItem: FC<IReportListItemProps> = ({ report }) => {
               source={{ uri: 'https://via.placeholder.com/50' }}
             />
           )}
-          left={(props) => (
-            <View style={styles.actions}>
-              <IconButton
-                size={20}
-                iconColor="black"
-                style={styles.icon}
-                icon="delete"
-                onPress={openDeleteDialog}
-              />
-              <IconButton
-                size={20}
-                iconColor="black"
-                style={styles.icon}
-                icon="pencil"
-                onPress={openEditScreen}
-              />
-            </View>
-          )}
+          left={() =>
+            report.ownerId === auth.currentUser?.uid && (
+              <View style={styles.actions}>
+                <IconButton
+                  size={20}
+                  iconColor="black"
+                  style={styles.icon}
+                  icon="delete"
+                  onPress={openDeleteDialog}
+                />
+                <IconButton
+                  size={20}
+                  iconColor="black"
+                  style={styles.icon}
+                  icon="pencil"
+                  onPress={openEditScreen}
+                />
+              </View>
+            )
+          }
         />
         <Card.Content>
           <Paragraph style={styles.reportData}>{report.data}</Paragraph>

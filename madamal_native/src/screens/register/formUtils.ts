@@ -5,7 +5,7 @@ export enum ERegisterFields {
   FULL_NAME = 'fullName',
   EMAIL = 'email',
   PASSWORD = 'password',
-  IMAGE = 'imageFile',
+  IMAGE = 'imageUri',
 }
 
 export const registerFormDataObject: Record<
@@ -35,7 +35,7 @@ export const registerSchema = z.object({
   [ERegisterFields.PASSWORD]: z
     .string()
     .min(3, 'נא להזין סיסמה באורך שלושה תווים לפחות'),
-  [ERegisterFields.IMAGE]: z.instanceof(File).optional(),
+  [ERegisterFields.IMAGE]: z.string().optional(),
 });
 
 export const defaultFormValues = {

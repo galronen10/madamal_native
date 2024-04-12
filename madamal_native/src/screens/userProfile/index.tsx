@@ -35,10 +35,10 @@ export const UserProfileScreen: FC = () => {
           textAlign="right"
         />
 
-        {userData.imageUrl && (
+        {userData.imageUri && (
           <Image
             style={styles.userImage}
-            source={{ uri: userData.imageUrl }}
+            source={{ uri: userData.imageUri }}
             resizeMode="contain"
           />
         )}

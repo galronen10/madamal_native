@@ -1,8 +1,7 @@
 import { useState } from 'react';
-import { ERegisterFields, RegisterFormData } from '../formUtils';
+import { RegisterFormData } from '../formUtils';
 import { toast } from '@/utils';
 import { useNavigation } from '@react-navigation/native';
-import { IUserRegister } from '@/models/user';
 import { EAppRoutes } from '@/models/routes';
 import { api } from '@/api';
 
@@ -17,53 +16,41 @@ export const useRegisterForm = (): IUseRegisterForm => {
   const [isButtonLoading, setIsButtonLoading] = useState<boolean>(false);
   const navigation = useNavigation();
 
-  const finishRegisterLogic = async (
-    formData: RegisterFormData,
-    imageName?: string,
-  ) => {
-    const { email, fullName, password } = formData;
-
-    const registerDto: IUserRegister = {
-      email,
-      fullName,
-      password,
-    };
-
-    if (imageName) registerDto.imageUrl = imageName;
+  const finishRegisterLogic = async (formData: RegisterFormData) => {
+    const { imageUri, ...registerDto } = formData;
+    let uid: string;
 
     try {
-      await api.auth.register(registerDto);
-      toast.success('המשתמש נוצר בהצלחה');
-      navigation.reset({
-        index: 0,
-        routes: [{ name: EAppRoutes.login }],
-      });
+      uid = await api.auth.register(registerDto);
     } catch (error: any) {
       if (error.status === 406) {
         toast.error('משתמש כבר קיים');
       } else {
-        console.error('Error during signup:', error);
         toast.error('אירעה שגיאה ביצירת המשתמש');
       }
+
+      return;
     }
+
+    try {
+      if (imageUri) await api.image.uploadImage(imageUri, `${uid}/profile.jpg`);
+      toast.success('המשתמש נוצר בהצלחה');
+    } catch (error: any) {
+      toast.success('המשתמש נוצר בהצלחה אך הייתה שגיאה בשמירת התמונה');
+    }
+
+    navigation.reset({
+      index: 0,
+      routes: [{ name: EAppRoutes.main }],
+    });
   };
 
   const handleValidFormData = async (
     formData: RegisterFormData,
   ): Promise<void> => {
-    const imageFile = formData[ERegisterFields.IMAGE];
     setIsButtonLoading(true);
-    try {
-      // let serverFileName = '';
-      // if (imageFile) {
-      //   serverFileName = await uploadImage(imageFile);
-      // }
-      await finishRegisterLogic(formData);
-    } catch (error: any) {
-      toast.error('אירעה שגיאה בשמירת התמונה בשרת, אנא נסה שנית');
-    } finally {
-      setIsButtonLoading(false);
-    }
+    await finishRegisterLogic(formData);
+    setIsButtonLoading(false);
   };
 
   const handleWrongFormData = (): void => {

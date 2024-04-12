@@ -10,15 +10,12 @@ export interface IUserUpdateDto {
 
 export type IUserRegister = IUserUpdateDto & IUserLoginDetails;
 
-export interface IBasicUserData {
+export interface IUserFromDb {
+  uid: string;
   email: string;
   fullName: string;
-  imageUrl?: string;
 }
 
-export interface StoreUser extends IBasicUserData {
-  userId: string;
-}
-export interface UserDto extends IBasicUserData {
-  _id: string;
+export interface IStoreUser extends IUserFromDb {
+  imageUrl?: string;
 }

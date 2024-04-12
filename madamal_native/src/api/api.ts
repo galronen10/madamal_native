@@ -1,4 +1,4 @@
-import { IReport, IReportDTO } from '@/models/reports';
+import { IReport, IReportDTO, IReportInDB } from '@/models/reports';
 import { IUserRegister } from '@/models/user';
 import { auth, database, storage } from 'config/firebase';
 import {
@@ -17,8 +17,21 @@ import {
   updateDoc,
 } from 'firebase/firestore';
 
-export const reportCollectionRef = collection(database, 'reports');
+export const reportCollectionRef = collection(database, 'reports_native');
 export const userCollectionRef = collection(database, 'users');
+
+const uploadImage = async (
+  imageUri: string,
+  imageName?: string,
+): Promise<string> => {
+  const response = await fetch(imageUri);
+  const blob = await response.blob();
+
+  const imageRef = ref(storage, `images/${imageName}`);
+  const res = await uploadBytes(imageRef, blob);
+
+  return getDownloadURL(res.ref);
+};
 
 export const api = {
   report: {
@@ -30,22 +43,24 @@ export const api = {
       const docRef = doc(reportCollectionRef, reportId);
       return deleteDoc(docRef);
     },
-    addReport: async (reportDTO: IReportDTO): Promise<void> => {},
+    addReport: async (
+      reportDTO: IReportDTO,
+      imageUri?: string,
+    ): Promise<void> => {
+      const docRef = doc(reportCollectionRef);
+      const uploadedImageUrl: string = imageUri
+        ? await uploadImage(imageUri, `reports/${docRef.id}/reportImage.jpg`)
+        : '';
+
+      await setDoc(docRef, {
+        ...reportDTO,
+        image: uploadedImageUrl,
+      } as IReportInDB);
+    },
     updateReport: async (reportDTO: IReportDTO): Promise<void> => {},
   },
   image: {
-    uploadImage: async (
-      imageUri: string,
-      imageName?: string,
-    ): Promise<string> => {
-      const response = await fetch(imageUri);
-      const blob = await response.blob();
-
-      const imageRef = ref(storage, `images/${imageName}`);
-      const res = await uploadBytes(imageRef, blob);
-
-      return getDownloadURL(res.ref);
-    },
+    uploadImage,
   },
   auth: {
     register: async (data: IUserRegister): Promise<string> => {

@@ -6,7 +6,7 @@ import { HeaderAddReport, LogoutButton } from '@/navigation/components';
 import { EAppRoutes } from '@/models/routes';
 import { titleDisplayText } from '@/navigation/models';
 import { api, reportCollectionRef } from '@/api';
-import { IReport, IReportInDb as IReportInDB } from '@/models/reports';
+import { IReport, IReportInDB as IReportInDB } from '@/models/reports';
 import { setReports } from '@/redux/reports';
 import { Unsubscribe, onSnapshot, query } from 'firebase/firestore';
 import { useDispatch } from 'react-redux';

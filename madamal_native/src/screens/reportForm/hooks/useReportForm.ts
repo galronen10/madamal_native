@@ -1,25 +1,19 @@
 import { toast } from '@/utils';
-
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   AddReportFormData,
   EAddReportFields,
   defaultFormValues,
 } from '../formUtils';
-import { IReport, IReportDTO } from '@/models/reports';
+import { IReport } from '@/models/reports';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { useAppSelector } from '@/hooks/store';
-import { selectUserId } from '@/redux/user';
 import { api } from '@/api';
+import { auth } from 'config/firebase';
 
 type TGetReportForFormRes = Promise<AddReportFormData>;
 interface IUseReportForm {
   getReportForForm: () => TGetReportForFormRes;
-  handleSave: (
-    data: string,
-    image: any,
-    imageFileName?: string,
-  ) => Promise<boolean>;
+  handleValidFormData: (formData: AddReportFormData) => Promise<void>;
   handleWrongFormData: () => void;
   submitText: string;
   isButtonLoading: boolean;
@@ -33,7 +27,7 @@ export const useReportForm = (): IUseReportForm => {
     () => route.params?.reportId,
     [route.params],
   );
-  const userId: string = useAppSelector(selectUserId);
+
   const navigation = useNavigation();
 
   const getReportForForm = useCallback(async (): TGetReportForFormRes => {
@@ -50,49 +44,39 @@ export const useReportForm = (): IUseReportForm => {
     };
   }, [selectedReportId]);
 
-  const handleSave = useCallback(
-    async (
-      data: string,
-      imageFile?: File,
-      imageFileName?: string,
-    ): Promise<boolean> => {
-      setIsButtonLoading(false);
-      navigation.goBack();
-
-      return true;
-
+  const handleValidFormData = useCallback(
+    async (formData: AddReportFormData): Promise<void> => {
       setIsButtonLoading(true);
-      const dto: IReportDTO = {
-        data,
-      };
+
+      const { data, title, imageUri } = formData;
+
       try {
-        if (imageFile) {
-          const image = new FormData();
-          // image.append('image', imageFile);
-
-          // const imageName = await api.image.uploadImage(image, imageFileName);
-          // dto.imageName = imageName;
-        }
-
         if (selectedReportId) {
           // await api.report.updateReport({ ...dto, _id: selectedReportId });
           toast.success('הדיווח עודכן בהצלחה');
         } else {
-          // await api.report.addReport({ ...dto, ownerId: userId });
+          await api.report.addReport(
+            {
+              data,
+              title,
+              lastUpdated: new Date().getTime(),
+              userId: auth.currentUser!.uid,
+            },
+            imageUri,
+          );
           toast.success('הדיווח נוצר בהצלחה');
         }
 
         setIsButtonLoading(false);
-        return true;
+        navigation.goBack();
       } catch (error) {
         toast.error(
           `אירעה שגיאה ${selectedReportId ? 'בעדכון' : 'ביצירת'} הדיווח `,
         );
         setIsButtonLoading(false);
-        return false;
       }
     },
-    [selectedReportId, userId],
+    [selectedReportId],
   );
 
   const handleWrongFormData = (): void => {
@@ -111,7 +95,7 @@ export const useReportForm = (): IUseReportForm => {
   );
 
   return {
-    handleSave,
+    handleValidFormData,
     handleWrongFormData,
     getReportForForm,
     submitText,

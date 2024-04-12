@@ -33,7 +33,8 @@ export const useRegisterForm = (): IUseRegisterForm => {
     }
 
     try {
-      if (imageUri) await api.image.uploadImage(imageUri, `${uid}/profile.jpg`);
+      if (imageUri)
+        await api.image.uploadImage(imageUri, `users/${uid}/profile.jpg`);
       toast.success('המשתמש נוצר בהצלחה');
     } catch (error: any) {
       toast.success('המשתמש נוצר בהצלחה אך הייתה שגיאה בשמירת התמונה');

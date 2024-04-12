@@ -2,7 +2,7 @@ import { z } from 'zod';
 import { IFormFieldInputData } from '@/models/form';
 
 export enum EAddReportFields {
-  IMAGE = 'imageFile',
+  IMAGE = 'imageUri',
   DATA = 'data',
   TITLE = 'title',
   DEFAULT_IMAGE_NAME = 'defaultImageName',
@@ -30,7 +30,7 @@ export const addReportFormDataObject: Record<
 };
 
 export const schema = z.object({
-  [EAddReportFields.IMAGE]: z.instanceof(File).optional(),
+  [EAddReportFields.IMAGE]: z.string().optional(),
   [EAddReportFields.DEFAULT_IMAGE_NAME]: z.string().optional(),
   [EAddReportFields.DATA]: z.string().min(1, 'חובה למלא מה קרה'),
   [EAddReportFields.TITLE]: z.string().min(1, 'חובה למלא את כותרת הדיווח'),

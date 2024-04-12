@@ -1,21 +1,17 @@
-export interface IReportInDb {
+export interface IReportInDB {
   userId: string;
   data: string;
-  image?: string;
+  image: string;
   title: string;
   lastUpdated: number;
 }
 
-export interface IReport extends Omit<IReportInDb, 'lastUpdated'> {
+export interface IReport extends Omit<IReportInDB, 'lastUpdated'> {
   id: string;
   lastUpdated: Date;
 }
 
-export interface IReportDTO {
-  userId?: string;
-  data?: string;
-  imageName?: any;
-}
+export type IReportDTO = Omit<IReportInDB, 'image'>;
 
 export interface IUpdateInReportDTO extends IReportDTO {
   reportId: string;

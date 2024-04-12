@@ -22,10 +22,6 @@ export const styles = StyleSheet.create({
   icon: {
     marginRight: 10,
   },
-  postTime: {
-    color: Colors.listItemTime,
-    textAlign: 'right',
-  },
   profileImage: {
     borderRadius: 25,
     marginRight: 10,
@@ -40,6 +36,10 @@ export const styles = StyleSheet.create({
     height: 200,
     resizeMode: 'cover',
     width: '80%',
+  },
+  reportTime: {
+    color: Colors.listItemTime,
+    textAlign: 'right',
   },
   username: {
     alignSelf: 'flex-end',

@@ -1,13 +1,8 @@
-import { useCallback, useEffect } from 'react';
+import { useEffect } from 'react';
 import { FC } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { FieldValues, useForm } from 'react-hook-form';
-import {
-  AddReportFormData,
-  EAddReportFields,
-  defaultFormValues,
-  schema,
-} from './formUtils';
+import { useForm } from 'react-hook-form';
+import { AddReportFormData, defaultFormValues, schema } from './formUtils';
 import { useReportForm } from './hooks';
 import { View } from 'react-native';
 import { Button } from 'react-native-paper';
@@ -17,7 +12,7 @@ import { ReportFormBody } from './components';
 export const ReportFormScreen: FC = () => {
   const {
     getReportForForm,
-    handleSave,
+    handleValidFormData,
     handleWrongFormData,
     submitText,
     isButtonLoading,
@@ -40,22 +35,6 @@ export const ReportFormScreen: FC = () => {
     func();
   }, [getReportForForm, reset]);
 
-  const handleClose = useCallback(() => {
-    reset();
-  }, [reset]);
-
-  const onSubmit = useCallback(
-    async (form: FieldValues): Promise<void> => {
-      const isSaved = await handleSave(
-        form[EAddReportFields.DATA],
-        form[EAddReportFields.IMAGE],
-        form[EAddReportFields.DEFAULT_IMAGE_NAME],
-      );
-      if (isSaved) handleClose();
-    },
-    [handleSave, handleClose],
-  );
-
   return (
     <View style={styles.container}>
       <View style={styles.formBody}>
@@ -63,7 +42,7 @@ export const ReportFormScreen: FC = () => {
       </View>
       <Button
         mode="contained"
-        onPress={handleSubmit(onSubmit, handleWrongFormData)}
+        onPress={handleSubmit(handleValidFormData, handleWrongFormData)}
         style={styles.button}
       >
         {submitText}

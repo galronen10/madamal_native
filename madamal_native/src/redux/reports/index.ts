@@ -31,11 +31,9 @@ export const selectAllReports = (state: RootState) => state.reports.reports;
 export const selectReportsOfLoggedUser = createSelector(
   [selectAllReports, selectUserId],
   (reports: IReport[], userId: string): IReport[] =>
-    reports.filter(
-      (report) => report.ownerId === 'AqlnjyKRexOe59UPWtCxXAtAer43',
-    ),
+    reports.filter((report) => report.userId === userId),
 );
-export const selectReportById = (reportId: number) =>
+export const selectReportById = (reportId: string) =>
   createSelector(
     [selectAllReports],
     (reports: IReport[]): IReport | undefined =>

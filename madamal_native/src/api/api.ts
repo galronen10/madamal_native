@@ -60,10 +60,15 @@ export const api = {
       signInWithEmailAndPassword(auth, email, password),
     logout: async (): Promise<void> => signOut(auth),
   },
-  // user: {
-  //   getById: async (userId: string): Promise<UserDto> => {},
-  //   update: async (
-  //     details: Partial<UserDto | UserLoginDeatils>,
-  //   ): Promise<UserDto> => {},
-  // },
+  user: {
+    getRefById: (userId: string) => doc(userCollectionRef, userId),
+    getImageUri: async (userId: string): Promise<string> => {
+      const imageRef = ref(storage, `images/${userId}/profile.jpg`);
+      return getDownloadURL(imageRef);
+    },
+    // getById: async (userId: string): Promise<IBasicUserData> => {},
+    // update: async (
+    //   details: Partial<UserDto | UserLoginDeatils>,
+    // ): Promise<UserDto> => {},
+  },
 };

@@ -1,23 +1,20 @@
-import { StoreUser } from '@/models/user';
+import { IStoreUser } from '@/models/user';
 import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '..';
-import { userStub } from '@/constants/userStub';
 
-// Define a type for the slice state
 interface UserState {
-  userData: StoreUser;
+  userData: IStoreUser;
 }
 
-// Define the initial state using that type
 const initialState: UserState = {
-  userData: userStub,
+  userData: { email: '', fullName: '', uid: '' },
 };
 
 export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    updateUser: (state, action: PayloadAction<Partial<StoreUser>>) => {
+    updateUser: (state, action: PayloadAction<Partial<IStoreUser>>) => {
       return {
         ...state,
         userData: { ...state.userData, ...action.payload },
@@ -33,11 +30,11 @@ export const userSlice = createSlice({
 
 export const { updateUser, logout } = userSlice.actions;
 
-export const selectUser = (state: RootState): StoreUser => state.user.userData;
+export const selectUser = (state: RootState): IStoreUser => state.user.userData;
 
 export const selectUserId = createSelector(
   selectUser,
-  (user: StoreUser): string => user.userId,
+  (user: IStoreUser): string => user.uid,
 );
 
 export const selectIsUserLoggedIn = createSelector(
@@ -46,7 +43,7 @@ export const selectIsUserLoggedIn = createSelector(
 );
 export const selectUserName = createSelector(
   selectUser,
-  (user: StoreUser): string => user.fullName,
+  (user: IStoreUser): string => user.fullName,
 );
 
 export default userSlice.reducer;

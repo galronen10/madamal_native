@@ -8,7 +8,14 @@ import {
   signOut,
 } from 'firebase/auth';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { collection, doc, getDoc, setDoc, deleteDoc } from 'firebase/firestore';
+import {
+  collection,
+  doc,
+  getDoc,
+  setDoc,
+  deleteDoc,
+  updateDoc,
+} from 'firebase/firestore';
 
 export const reportCollectionRef = collection(database, 'reports');
 export const userCollectionRef = collection(database, 'users');
@@ -67,8 +74,9 @@ export const api = {
       return getDownloadURL(imageRef);
     },
     // getById: async (userId: string): Promise<IBasicUserData> => {},
-    // update: async (
-    //   details: Partial<UserDto | UserLoginDeatils>,
-    // ): Promise<UserDto> => {},
+    update: async (uid: string, fullName: string): Promise<void> =>
+      updateDoc(doc(userCollectionRef, uid), {
+        fullName,
+      }),
   },
 };

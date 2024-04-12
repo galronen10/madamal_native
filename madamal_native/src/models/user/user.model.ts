@@ -17,5 +17,5 @@ export interface IUserFromDb {
 }
 
 export interface IStoreUser extends IUserFromDb {
-  imageUrl?: string;
+  imageUri?: string;
 }

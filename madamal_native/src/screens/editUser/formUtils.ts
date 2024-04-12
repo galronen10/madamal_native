@@ -3,7 +3,7 @@ import { z } from 'zod';
 
 export enum EEditUserFields {
   FULL_NAME = 'fullName',
-  IMAGE = 'imageFile',
+  IMAGE = 'imageUri',
   DEFAULT_IMAGE_NAME = 'defaultImageName',
 }
 
@@ -28,7 +28,7 @@ export const editUserFormDataObject: Record<
 export const editUserSchema = z.object({
   [EEditUserFields.FULL_NAME]: z.string().min(3, 'נא להזין שם מלא'),
 
-  [EEditUserFields.IMAGE]: z.instanceof(File).optional(),
+  [EEditUserFields.IMAGE]: z.string().optional(),
   [EEditUserFields.DEFAULT_IMAGE_NAME]: z.string().optional(),
 });
 

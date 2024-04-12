@@ -46,7 +46,7 @@ export const BottomNavigator: FC = () => {
               };
 
               if (userImageUri) {
-                userForStore.imageUrl = userImageUri;
+                userForStore.imageUri = userImageUri;
               }
 
               dispatch(updateUser(userForStore));

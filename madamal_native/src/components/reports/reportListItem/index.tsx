@@ -1,33 +1,16 @@
 import { View } from 'react-native';
-import { Card, Paragraph, IconButton } from 'react-native-paper';
-import React, { FC, useState } from 'react';
+import { Card, Paragraph } from 'react-native-paper';
+import React, { FC } from 'react';
 import { IReport } from '@/models/reports';
 import { styles } from './styles';
-import { DeleteReportDialog } from '../deleteReportDialog';
-import { useNavigation } from '@react-navigation/native';
-import { EAppRoutes } from '@/models/routes';
 import { auth } from 'config/firebase';
+import { ReportListItemActions } from '../reportListItemActions';
 
 interface IReportListItemProps {
   report: IReport;
 }
 
 export const ReportListItem: FC<IReportListItemProps> = ({ report }) => {
-  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
-  const navigation = useNavigation();
-
-  const closeDeleteDialog = (): void => {
-    setShowDeleteDialog(false);
-  };
-
-  const openDeleteDialog = (): void => {
-    setShowDeleteDialog(true);
-  };
-
-  const openEditScreen = (): void => {
-    navigation.navigate(EAppRoutes.reportForm, { reportId: report.id });
-  };
-
   return (
     <View style={styles.container}>
       <Card style={styles.card}>
@@ -39,22 +22,7 @@ export const ReportListItem: FC<IReportListItemProps> = ({ report }) => {
           subtitleStyle={styles.reportTime}
           left={() =>
             report.userId === auth.currentUser?.uid && (
-              <View style={styles.actions}>
-                <IconButton
-                  size={20}
-                  iconColor="black"
-                  style={styles.icon}
-                  icon="delete"
-                  onPress={openDeleteDialog}
-                />
-                <IconButton
-                  size={20}
-                  iconColor="black"
-                  style={styles.icon}
-                  icon="pencil"
-                  onPress={openEditScreen}
-                />
-              </View>
+              <ReportListItemActions reportId={report.id} />
             )
           }
         />
@@ -68,12 +36,6 @@ export const ReportListItem: FC<IReportListItemProps> = ({ report }) => {
           />
         )}
       </Card>
-
-      <DeleteReportDialog
-        handleClose={closeDeleteDialog}
-        isVisible={showDeleteDialog}
-        reportId={report.id}
-      />
     </View>
   );
 };

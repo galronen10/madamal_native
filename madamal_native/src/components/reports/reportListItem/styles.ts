@@ -2,11 +2,6 @@ import { StyleSheet } from 'react-native';
 import Colors from '@/constants/colors'; // Import the Colors file
 
 export const styles = StyleSheet.create({
-  actions: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-  },
   card: {
     alignContent: 'center',
     paddingBottom: 20,
@@ -18,9 +13,6 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     marginBottom: 10,
-  },
-  icon: {
-    marginRight: 10,
   },
   profileImage: {
     borderRadius: 25,

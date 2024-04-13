@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { FontAwesome } from '@expo/vector-icons';
 import { HomeScreen, UserProfileScreen, UserReportsScreen } from '@/screens';
@@ -13,11 +13,13 @@ import { useDispatch } from 'react-redux';
 import { auth } from 'config/firebase';
 import { IStoreUser, IUserFromDb } from '@/models/user';
 import { updateUser } from '@/redux/user';
+import { FullSizeLoader } from '@/components/common';
 
 const Tab = createBottomTabNavigator();
 
 export const BottomNavigator: FC = () => {
   const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const unSubArray: Unsubscribe[] = [];
@@ -38,6 +40,7 @@ export const BottomNavigator: FC = () => {
         });
 
         dispatch(setReports(reports));
+        setIsLoading(false);
       }),
     );
 
@@ -71,7 +74,9 @@ export const BottomNavigator: FC = () => {
       });
   }, []);
 
-  return (
+  return isLoading ? (
+    <FullSizeLoader />
+  ) : (
     <Tab.Navigator
       screenOptions={({ route }) => ({
         tabBarActiveTintColor: 'tomato',

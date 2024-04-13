@@ -13,7 +13,7 @@ export const styles = StyleSheet.create({
   },
   container: {
     alignSelf: 'center',
-    width: 200,
+    width: 230,
   },
   deleteButton: {
     backgroundColor: Colors.danger,

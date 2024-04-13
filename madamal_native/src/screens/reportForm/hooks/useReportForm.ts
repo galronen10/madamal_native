@@ -48,22 +48,17 @@ export const useReportForm = (): IUseReportForm => {
     async (formData: AddReportFormData): Promise<void> => {
       setIsButtonLoading(true);
 
-      const { data, title, imageUri } = formData;
+      const { defaultImageName, ...DTO } = formData;
 
       try {
         if (selectedReportId) {
-          // await api.report.updateReport({ ...dto, _id: selectedReportId });
+          await api.report.updateReport({ ...DTO, reportId: selectedReportId });
           toast.success('הדיווח עודכן בהצלחה');
         } else {
-          await api.report.addReport(
-            {
-              data,
-              title,
-              lastUpdated: new Date().getTime(),
-              userId: auth.currentUser!.uid,
-            },
-            imageUri,
-          );
+          await api.report.addReport({
+            ...DTO,
+            userId: auth.currentUser!.uid,
+          });
           toast.success('הדיווח נוצר בהצלחה');
         }
 

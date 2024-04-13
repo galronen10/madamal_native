@@ -36,6 +36,7 @@ export const LoginScreen: React.FC = () => {
           להרשמה לחץ כאן
         </Button>
         <Button
+          loading={isButtonLoading}
           mode="contained"
           onPress={handleSubmit(handleValidFormData, handleWrongFormData)}
           style={styles.loginButton}

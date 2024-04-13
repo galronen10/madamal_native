@@ -5,7 +5,7 @@ export interface IUserLoginDetails {
 
 export interface IUserRegister extends IUserLoginDetails {
   fullName: string;
-  imageUrl?: string;
+  imageUri?: string;
 }
 
 export interface IUserFromDb {

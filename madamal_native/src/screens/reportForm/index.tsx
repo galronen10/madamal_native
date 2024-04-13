@@ -41,6 +41,7 @@ export const ReportFormScreen: FC = () => {
         <ReportFormBody control={control} />
       </View>
       <Button
+        loading={isButtonLoading}
         mode="contained"
         onPress={handleSubmit(handleValidFormData, handleWrongFormData)}
         style={styles.button}

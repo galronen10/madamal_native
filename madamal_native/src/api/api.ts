@@ -25,6 +25,12 @@ import {
 export const reportCollectionRef = collection(database, 'reports_native');
 export const userCollectionRef = collection(database, 'users');
 
+const getUserImageUrl = (userId: string): string =>
+  `users/${userId}/profile.jpg`;
+
+const getReportImageUrl = (reportId: string): string =>
+  `reports/${reportId}/reportImage.jpg`;
+
 const uploadImage = async (
   imageUri: string,
   imageName?: string,
@@ -54,7 +60,7 @@ export const api = {
       const { imageUri, ...restOfDTO } = reportDTO;
 
       const uploadedImageUrl: string = imageUri
-        ? await uploadImage(imageUri, `reports/${docRef.id}/reportImage.jpg`)
+        ? await uploadImage(imageUri, getReportImageUrl(docRef.id))
         : '';
 
       const reportToAdd: IReportInDB = {
@@ -82,7 +88,7 @@ export const api = {
       if (imageUri) {
         const uploadedImageUrl: string = await uploadImage(
           imageUri,
-          `reports/${reportId}/reportImage.jpg`,
+          getReportImageUrl(reportId),
         );
 
         dataToUpdate.image = uploadedImageUrl;
@@ -101,8 +107,7 @@ export const api = {
 
       const { uid } = userCredential.user;
 
-      if (data.imageUrl)
-        await uploadImage(data.imageUrl, `users/${uid}/profile.jpg`);
+      if (data.imageUri) await uploadImage(data.imageUri, getUserImageUrl(uid));
 
       const docRef = doc(userCollectionRef, uid);
 
@@ -119,10 +124,17 @@ export const api = {
   user: {
     getRefById: (userId: string) => doc(userCollectionRef, userId),
     getImageUri: async (userId: string): Promise<string> => {
-      const imageRef = ref(storage, `images/${userId}/profile.jpg`);
-      return getDownloadURL(imageRef);
+      try {
+        const imageRef = ref(storage, `images/${getUserImageUrl(userId)}`);
+        return await getDownloadURL(imageRef);
+      } catch (error: any) {
+        if (error.code === 'storage/object-not-found') {
+          return '';
+        } else {
+          return '';
+        }
+      }
     },
-    // getById: async (userId: string): Promise<IBasicUserData> => {},
     update: async (uid: string, fullName: string): Promise<void> =>
       updateDoc(doc(userCollectionRef, uid), {
         fullName,

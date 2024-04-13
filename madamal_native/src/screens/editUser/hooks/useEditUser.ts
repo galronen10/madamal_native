@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import { useAppSelector } from '@/hooks/store';
 import { selectUser, updateUser } from '@/redux/user';
 import { api } from '@/api';
+import { IStoreUser } from '@/models/user';
 
 interface IUseEditUser {
   handleValidFormData: (formData: EditUserFormData) => Promise<void>;
@@ -28,28 +29,35 @@ export const useEditUser = (): IUseEditUser => {
     };
   }, [userData]);
 
-  const finishUpdateLogic = async (formData: EditUserFormData) => {
-    const { fullName, imageUri } = formData;
-
-    try {
-      await api.user.update(userData.uid, fullName);
-      if (imageUri)
-        await api.image.uploadImage(imageUri, `${userData.uid}/profile.jpg`);
-      dispatch(updateUser({ fullName, imageUri }));
-
-      toast.success('הפרטים עודכנו בהצלחה');
-    } catch (error: any) {
-      toast.error('אירעה שגיאה בעדכון הפרטים');
-    }
-  };
-
   const handleValidFormData = async (
     formData: EditUserFormData,
   ): Promise<void> => {
     setIsButtonLoading(true);
-    await finishUpdateLogic(formData);
-    setIsButtonLoading(false);
-    navigation.goBack();
+
+    const { fullName, imageUri } = formData;
+
+    try {
+      const payloadForStore: Partial<IStoreUser> = { fullName };
+
+      await api.user.update(userData.uid, fullName);
+      if (imageUri) {
+        const newImageUri = await api.image.uploadImage(
+          imageUri,
+          `${userData.uid}/profile.jpg`,
+        );
+
+        payloadForStore.imageUri = newImageUri;
+      }
+
+      dispatch(updateUser(payloadForStore));
+
+      toast.success('הפרטים עודכנו בהצלחה');
+      setIsButtonLoading(false);
+      navigation.goBack();
+    } catch (error: any) {
+      toast.error('אירעה שגיאה בעדכון הפרטים');
+      setIsButtonLoading(false);
+    }
   };
 
   const handleWrongFormData = (): void => {

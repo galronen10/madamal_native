@@ -37,13 +37,4 @@ export const selectUserId = createSelector(
   (user: IStoreUser): string => user.uid,
 );
 
-export const selectIsUserLoggedIn = createSelector(
-  selectUserId,
-  (userId: string): boolean => !!userId,
-);
-export const selectUserName = createSelector(
-  selectUser,
-  (user: IStoreUser): string => user.fullName,
-);
-
 export default userSlice.reducer;

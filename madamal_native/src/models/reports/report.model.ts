@@ -10,9 +10,13 @@ export interface IReport extends Omit<IReportInDB, 'lastUpdated'> {
   id: string;
   lastUpdated: Date;
 }
-
-export type IReportDTO = Omit<IReportInDB, 'image'>;
-
-export interface IUpdateInReportDTO extends IReportDTO {
+export interface IUpdateReportDTO {
+  data: string;
+  title: string;
+  imageUri?: string;
   reportId: string;
+}
+
+export interface IAddReportDTO extends Omit<IUpdateReportDTO, 'reportId'> {
+  userId: string;
 }

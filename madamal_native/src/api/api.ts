@@ -1,4 +1,9 @@
-import { IReport, IReportDTO, IReportInDB } from '@/models/reports';
+import {
+  IReport,
+  IAddReportDTO,
+  IReportInDB,
+  IUpdateReportDTO,
+} from '@/models/reports';
 import { IUserRegister } from '@/models/user';
 import { auth, database, storage } from 'config/firebase';
 import {
@@ -43,31 +48,62 @@ export const api = {
       const docRef = doc(reportCollectionRef, reportId);
       return deleteDoc(docRef);
     },
-    addReport: async (
-      reportDTO: IReportDTO,
-      imageUri?: string,
-    ): Promise<void> => {
+    addReport: async (reportDTO: IAddReportDTO): Promise<void> => {
       const docRef = doc(reportCollectionRef);
+
+      const { imageUri, ...restOfDTO } = reportDTO;
+
       const uploadedImageUrl: string = imageUri
         ? await uploadImage(imageUri, `reports/${docRef.id}/reportImage.jpg`)
         : '';
 
-      await setDoc(docRef, {
-        ...reportDTO,
+      const reportToAdd: IReportInDB = {
+        ...restOfDTO,
         image: uploadedImageUrl,
-      } as IReportInDB);
+        lastUpdated: new Date().getTime(),
+      };
+
+      await setDoc(docRef, reportToAdd);
     },
-    updateReport: async (reportDTO: IReportDTO): Promise<void> => {},
+    updateReport: async ({
+      data,
+      imageUri,
+      reportId,
+      title,
+    }: IUpdateReportDTO): Promise<void> => {
+      const docRef = doc(reportCollectionRef, reportId);
+
+      const dataToUpdate: Partial<IReportInDB> = {
+        data,
+        title,
+        lastUpdated: new Date().getTime(),
+      };
+
+      if (imageUri) {
+        const uploadedImageUrl: string = await uploadImage(
+          imageUri,
+          `reports/${reportId}/reportImage.jpg`,
+        );
+
+        dataToUpdate.image = uploadedImageUrl;
+      }
+
+      await updateDoc(docRef, dataToUpdate);
+    },
   },
   image: {
     uploadImage,
   },
   auth: {
-    register: async (data: IUserRegister): Promise<string> => {
+    register: async (data: IUserRegister): Promise<void> => {
       const userCredential: UserCredential =
         await createUserWithEmailAndPassword(auth, data.email, data.password);
 
       const { uid } = userCredential.user;
+
+      if (data.imageUrl)
+        await uploadImage(data.imageUrl, `users/${uid}/profile.jpg`);
+
       const docRef = doc(userCollectionRef, uid);
 
       await setDoc(docRef, {
@@ -75,8 +111,6 @@ export const api = {
         uid,
         email: data.email,
       });
-
-      return uid;
     },
     login: async (email: string, password: string): Promise<UserCredential> =>
       signInWithEmailAndPassword(auth, email, password),

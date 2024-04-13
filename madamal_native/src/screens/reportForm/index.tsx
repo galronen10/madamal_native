@@ -4,7 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { AddReportFormData, defaultFormValues, schema } from './formUtils';
 import { useReportForm } from './hooks';
-import { View } from 'react-native';
+import { KeyboardAvoidingView, ScrollView, View } from 'react-native';
 import { Button } from 'react-native-paper';
 import { styles } from './styles';
 import { ReportFormBody } from './components';
@@ -36,18 +36,22 @@ export const ReportFormScreen: FC = () => {
   }, [getReportForForm, reset]);
 
   return (
-    <View style={styles.container}>
-      <View style={styles.formBody}>
-        <ReportFormBody control={control} />
-      </View>
-      <Button
-        loading={isButtonLoading}
-        mode="contained"
-        onPress={handleSubmit(handleValidFormData, handleWrongFormData)}
-        style={styles.button}
-      >
-        {submitText}
-      </Button>
-    </View>
+    <KeyboardAvoidingView behavior="height">
+      <ScrollView>
+        <View style={styles.container}>
+          <View style={styles.formBody}>
+            <ReportFormBody control={control} />
+          </View>
+          <Button
+            loading={isButtonLoading}
+            mode="contained"
+            onPress={handleSubmit(handleValidFormData, handleWrongFormData)}
+            style={styles.button}
+          >
+            {submitText}
+          </Button>
+        </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 };

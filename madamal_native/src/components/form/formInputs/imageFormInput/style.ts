@@ -12,7 +12,7 @@ export const styles = StyleSheet.create({
     paddingBottom: 0,
   },
   image: {
-    height: 200,
-    width: 200,
+    height: 160,
+    width: 240,
   },
 });

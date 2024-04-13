@@ -8,7 +8,7 @@ import {
   editUserSchema,
 } from './formUtils';
 import { EditUserFormBody } from './components';
-import { View } from 'react-native';
+import { KeyboardAvoidingView, ScrollView, View } from 'react-native';
 import { styles } from './styles';
 import { Button } from 'react-native-paper';
 import { MadaMalBanner } from '@/components/common';
@@ -39,19 +39,23 @@ export const EditUserScreen: React.FC = () => {
   }, [getUserForForm, reset]);
 
   return (
-    <View style={styles.container}>
-      <MadaMalBanner />
-      <View style={styles.formBody}>
-        <EditUserFormBody control={control} />
-      </View>
-      <Button
-        loading={isButtonLoading}
-        mode="contained"
-        onPress={handleSubmit(handleValidFormData, handleWrongFormData)}
-        style={styles.button}
-      >
-        שמור שינויים
-      </Button>
-    </View>
+    <KeyboardAvoidingView behavior="height" style={styles.container}>
+      <ScrollView>
+        <View style={styles.container}>
+          <MadaMalBanner />
+          <View style={styles.formBody}>
+            <EditUserFormBody control={control} />
+          </View>
+          <Button
+            loading={isButtonLoading}
+            mode="contained"
+            onPress={handleSubmit(handleValidFormData, handleWrongFormData)}
+            style={styles.button}
+          >
+            שמור שינויים
+          </Button>
+        </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 };

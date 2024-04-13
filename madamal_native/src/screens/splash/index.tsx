@@ -1,17 +1,8 @@
 import React, { FC, useEffect } from 'react';
-import { View, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { auth } from 'config/firebase';
-import { ActivityIndicator } from 'react-native-paper';
 import { EAppRoutes } from '@/models/routes';
-
-const styles = StyleSheet.create({
-  container: {
-    alignItems: 'center',
-    flex: 1,
-    justifyContent: 'center',
-  },
-});
+import { FullSizeLoader } from '@/components/common';
 
 export const SplashScreen: FC = () => {
   const navigation = useNavigation();
@@ -27,9 +18,5 @@ export const SplashScreen: FC = () => {
     return () => unsubscribe();
   }, []);
 
-  return (
-    <View style={styles.container}>
-      <ActivityIndicator size={100} />
-    </View>
-  );
+  return <FullSizeLoader />;
 };

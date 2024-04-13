@@ -20,11 +20,7 @@ export const userSlice = createSlice({
         userData: { ...state.userData, ...action.payload },
       };
     },
-    logout: () => {
-      return {
-        ...initialState,
-      };
-    },
+    logout: () => ({ ...initialState }),
   },
 });
 
@@ -35,15 +31,6 @@ export const selectUser = (state: RootState): IStoreUser => state.user.userData;
 export const selectUserId = createSelector(
   selectUser,
   (user: IStoreUser): string => user.uid,
-);
-
-export const selectIsUserLoggedIn = createSelector(
-  selectUserId,
-  (userId: string): boolean => !!userId,
-);
-export const selectUserName = createSelector(
-  selectUser,
-  (user: IStoreUser): string => user.fullName,
 );
 
 export default userSlice.reducer;

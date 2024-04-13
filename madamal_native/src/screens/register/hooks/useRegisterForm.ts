@@ -25,6 +25,7 @@ export const useRegisterForm = (): IUseRegisterForm => {
       await api.auth.register(formData);
       setIsButtonLoading(false);
 
+      toast.success('נרשמת בהצלחה');
       navigation.reset({
         index: 0,
         routes: [{ name: EAppRoutes.main }],

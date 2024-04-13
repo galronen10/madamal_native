@@ -39,6 +39,7 @@ export const RegisterScreen: React.FC = () => {
         נרשמת בעבר? לחץ כאן על מנת להתחבר
       </Button>
       <Button
+        loading={isButtonLoading}
         mode="contained"
         onPress={handleSubmit(handleValidFormData, handleWrongFormData)}
         style={styles.button}

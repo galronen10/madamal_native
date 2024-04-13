@@ -19,7 +19,9 @@ export const loginFormDataObject: Record<ELoginFields, IFormFieldInputData> = {
 
 export const schema = z.object({
   [ELoginFields.EMAIL]: z.string().email('כתובת המייל לא חוקית'),
-  [ELoginFields.PASSWORD]: z.string(),
+  [ELoginFields.PASSWORD]: z
+    .string()
+    .min(6, 'נא להזין סיסמה באורך שישה תווים לפחות'),
 });
 
 export const defaultFormValues = {

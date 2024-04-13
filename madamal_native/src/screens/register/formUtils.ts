@@ -34,7 +34,7 @@ export const registerSchema = z.object({
   [ERegisterFields.FULL_NAME]: z.string().min(3, 'נא להזין שם מלא'),
   [ERegisterFields.PASSWORD]: z
     .string()
-    .min(3, 'נא להזין סיסמה באורך שלושה תווים לפחות'),
+    .min(6, 'נא להזין סיסמה באורך שישה תווים לפחות'),
   [ERegisterFields.IMAGE]: z.string().optional(),
 });
 

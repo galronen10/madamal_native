@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { EAppRoutes } from '@/models/routes';
 import { api } from '@/api';
+import { AuthErrorCodes } from 'firebase/auth';
 
 interface IUseHandleLogin {
   handleValidFormData: (formData: LoginFormData) => Promise<void>;
@@ -45,12 +46,19 @@ export const useHandleLogin = (): IUseHandleLogin => {
     } catch (error: any) {
       setIsButtonLoading(false);
 
-      console.log(error);
-      toast.error(
-        error.status === 401
-          ? 'פרטי ההתחברות שהזנת שגויים'
-          : 'אירעה שגיאה בעת התחברות',
-      );
+      let errorMessage: string;
+      switch (error.code) {
+        case AuthErrorCodes.INVALID_LOGIN_CREDENTIALS:
+          errorMessage = 'המשתמש אליו ניסית להתחבר לא קיים';
+          break;
+        case AuthErrorCodes.TOO_MANY_ATTEMPTS_TRY_LATER:
+          errorMessage = 'המשמתמש ננעל זמנית עקב ניסיות כושלים רבים מידי';
+          break;
+        default:
+          errorMessage = 'שגיאה בפרטי ההתחברות נא לנסות שוב';
+          break;
+      }
+      toast.error(errorMessage);
     }
   };
 

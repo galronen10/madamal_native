@@ -10,7 +10,10 @@ export const HomeScreen: FC = () => {
 
   return (
     <View>
-      <ReportList reportsList={allReports} />
+      <ReportList
+        reportsList={allReports}
+        noDataText="לא נוצרו דיווחים במערכת"
+      />
     </View>
   );
 };

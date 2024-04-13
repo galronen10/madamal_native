@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-raw-text */
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { styles } from './styles';
 import { Portal, Dialog, Text, Button } from 'react-native-paper';
 import { toast } from '@/utils';
@@ -16,13 +16,17 @@ export const DeleteReportDialog: FC<IDeleteReportDialogProps> = ({
   isVisible,
   reportId,
 }) => {
+  const [isButtonLoading, setIsButtonLoading] = useState<boolean>(false);
+
   const onDelete = async () => {
+    setIsButtonLoading(true);
     try {
       await api.report.deleteReport(reportId);
-      console.log('report deleted:' + reportId);
+      setIsButtonLoading(false);
       handleClose();
     } catch (error: any) {
       toast.error('אירעה שגיאה במחיקת הדיווח');
+      setIsButtonLoading(false);
     }
   };
 
@@ -38,6 +42,7 @@ export const DeleteReportDialog: FC<IDeleteReportDialogProps> = ({
         <Dialog.Actions>
           <Button
             mode="contained"
+            loading={isButtonLoading}
             onPress={onDelete}
             style={[styles.button, styles.deleteButton]}
           >

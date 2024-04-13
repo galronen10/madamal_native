@@ -20,11 +20,7 @@ export const userSlice = createSlice({
         userData: { ...state.userData, ...action.payload },
       };
     },
-    logout: () => {
-      return {
-        ...initialState,
-      };
-    },
+    logout: () => ({ ...initialState }),
   },
 });
 

@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-raw-text */
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { styles } from './styles';
 import { Portal, Dialog, Text, Button } from 'react-native-paper';
 import { toast } from '@/utils';
@@ -8,6 +8,7 @@ import { EAppRoutes } from '@/models/routes';
 import { logout } from '@/redux/user';
 import { useDispatch } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
+import { resetReports } from '@/redux/reports';
 
 interface ILogoutDialogProps {
   isVisible: boolean;
@@ -18,13 +19,18 @@ export const LogoutDialog: FC<ILogoutDialogProps> = ({
   handleClose,
   isVisible,
 }) => {
+  const [isButtonLoading, setIsButtonLoading] = useState<boolean>(false);
+
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
-  const onDelete = async () => {
+  const onLogout = async () => {
+    setIsButtonLoading(true);
     try {
       await api.auth.logout();
       dispatch(logout());
+      dispatch(resetReports());
+      setIsButtonLoading(false);
       handleClose();
       navigation.reset({
         index: 0,
@@ -32,6 +38,7 @@ export const LogoutDialog: FC<ILogoutDialogProps> = ({
       });
     } catch (error: any) {
       toast.error('אירעה שגיאה בהתנתקות');
+      setIsButtonLoading(false);
     }
   };
 
@@ -45,8 +52,9 @@ export const LogoutDialog: FC<ILogoutDialogProps> = ({
         <Dialog.Title style={styles.title}>התנתקות</Dialog.Title>
         <Dialog.Actions>
           <Button
+            loading={isButtonLoading}
             mode="contained"
-            onPress={onDelete}
+            onPress={onLogout}
             style={[styles.button, styles.deleteButton]}
           >
             <Text style={styles.textStyle}>התנתק</Text>

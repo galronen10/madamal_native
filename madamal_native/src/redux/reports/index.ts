@@ -21,10 +21,11 @@ export const reportsSlice = createSlice({
       ...state,
       reports: action.payload,
     }),
+    resetReports: () => ({ ...initialState }),
   },
 });
 
-export const { setReports } = reportsSlice.actions;
+export const { setReports, resetReports } = reportsSlice.actions;
 
 export const selectAllReports = (state: RootState) => state.reports.reports;
 

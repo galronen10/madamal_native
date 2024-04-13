@@ -8,7 +8,7 @@ import {
   registerSchema,
 } from './formUtils';
 import { MadaMalBanner } from '@/components/common';
-import { View } from 'react-native';
+import { KeyboardAvoidingView, ScrollView, View } from 'react-native';
 import { RegisterFormBody } from './components';
 import { styles } from './styles';
 import { Button } from 'react-native-paper';
@@ -30,22 +30,26 @@ export const RegisterScreen: React.FC = () => {
   });
 
   return (
-    <View style={styles.container}>
-      <MadaMalBanner />
-      <View style={styles.formBody}>
-        <RegisterFormBody control={control} />
-      </View>
-      <Button mode="text" onPress={goToLogin}>
-        נרשמת בעבר? לחץ כאן על מנת להתחבר
-      </Button>
-      <Button
-        loading={isButtonLoading}
-        mode="contained"
-        onPress={handleSubmit(handleValidFormData, handleWrongFormData)}
-        style={styles.button}
-      >
-        הרשם
-      </Button>
-    </View>
+    <KeyboardAvoidingView behavior="height">
+      <ScrollView>
+        <View style={styles.container}>
+          <MadaMalBanner />
+          <View style={styles.formBody}>
+            <RegisterFormBody control={control} />
+          </View>
+          <Button mode="text" onPress={goToLogin}>
+            נרשמת בעבר? לחץ כאן על מנת להתחבר
+          </Button>
+          <Button
+            loading={isButtonLoading}
+            mode="contained"
+            onPress={handleSubmit(handleValidFormData, handleWrongFormData)}
+            style={styles.button}
+          >
+            הרשם
+          </Button>
+        </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 };

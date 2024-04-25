@@ -1,5 +1,5 @@
 import { FlatList, StyleSheet, View } from 'react-native';
-import React, { FC } from 'react';
+import React, { FC, useMemo } from 'react';
 import { IReport } from '@/models/reports';
 import { ReportListItem } from '../reportListItem';
 import { Text } from 'react-native-paper';
@@ -24,9 +24,18 @@ export const ReportList: FC<IReportListProps> = ({
   reportsList,
   noDataText,
 }) => {
-  return reportsList.length ? (
+  const sortedReports = useMemo(() => {
+    const reportsCopy = [...reportsList];
+    reportsCopy.sort(
+      (a, b) => b.lastUpdated.getDate() - a.lastUpdated.getDate(),
+    );
+
+    return reportsCopy;
+  }, [reportsList]);
+
+  return sortedReports.length ? (
     <FlatList
-      data={reportsList}
+      data={sortedReports}
       renderItem={({ item }) => <ReportListItem report={item} />}
       keyExtractor={(item) => item?.id?.toString() ?? 'q'}
     />

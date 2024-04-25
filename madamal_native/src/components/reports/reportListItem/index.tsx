@@ -1,16 +1,22 @@
 import { View } from 'react-native';
 import { Card, Paragraph } from 'react-native-paper';
-import React, { FC } from 'react';
+import React, { FC, useMemo } from 'react';
 import { IReport } from '@/models/reports';
 import { styles } from './styles';
 import { auth } from 'config/firebase';
 import { ReportListItemActions } from '../reportListItemActions';
+import { dateUtils } from '@/utils';
 
 interface IReportListItemProps {
   report: IReport;
 }
 
 export const ReportListItem: FC<IReportListItemProps> = ({ report }) => {
+  const dateDisplay = useMemo(
+    () => dateUtils.dateFormatter(report?.lastUpdated),
+    [report?.lastUpdated],
+  );
+
   return (
     <View style={styles.container}>
       <Card style={styles.card}>
@@ -18,7 +24,7 @@ export const ReportListItem: FC<IReportListItemProps> = ({ report }) => {
           style={styles.header}
           title={report.title}
           titleStyle={styles.username}
-          subtitle={report.lastUpdated.toLocaleDateString()}
+          subtitle={dateDisplay}
           subtitleStyle={styles.reportTime}
           left={() =>
             report.userId === auth.currentUser?.uid && (

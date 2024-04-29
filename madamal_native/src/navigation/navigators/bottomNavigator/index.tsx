@@ -13,7 +13,7 @@ import { useDispatch } from 'react-redux';
 import { auth } from 'config/firebase';
 import { IStoreUser, IUserFromDb } from '@/models/user';
 import { updateUser } from '@/redux/user';
-import { FullSizeLoader } from '@/components/common';
+import { FullSizeLoader, WeatherDisplay } from '@/components/common';
 
 const Tab = createBottomTabNavigator();
 
@@ -115,6 +115,7 @@ export const BottomNavigator: FC = () => {
           tabBarIcon: ({ color, size }) => (
             <FontAwesome name="user" size={size} color={color} />
           ),
+          headerLeft: () => <WeatherDisplay />,
         }}
       />
     </Tab.Navigator>

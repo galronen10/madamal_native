@@ -20,6 +20,8 @@ import {
   setDoc,
   deleteDoc,
   updateDoc,
+  query,
+  orderBy,
 } from 'firebase/firestore';
 
 export const reportCollectionRef = collection(database, 'reports_native');
@@ -46,6 +48,7 @@ const uploadImage = async (
 
 export const api = {
   report: {
+    getAll: () => query(reportCollectionRef, orderBy('lastUpdated', 'desc')),
     getById: async (reportId: string): Promise<IReport> => {
       const docRef = doc(reportCollectionRef, reportId);
       return (await getDoc(docRef)).data() as IReport;

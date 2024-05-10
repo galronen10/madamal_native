@@ -5,10 +5,10 @@ import { HomeScreen, UserProfileScreen, UserReportsScreen } from '@/screens';
 import { HeaderAddReport, LogoutButton } from '@/navigation/components';
 import { EAppRoutes } from '@/models/routes';
 import { titleDisplayText } from '@/navigation/models';
-import { api, reportCollectionRef } from '@/api';
+import { api } from '@/api';
 import { IReport, IReportInDB as IReportInDB } from '@/models/reports';
 import { setReports } from '@/redux/reports';
-import { Unsubscribe, onSnapshot, query } from 'firebase/firestore';
+import { Unsubscribe, onSnapshot } from 'firebase/firestore';
 import { useDispatch } from 'react-redux';
 import { auth } from 'config/firebase';
 import { IStoreUser, IUserFromDb } from '@/models/user';
@@ -24,7 +24,7 @@ export const BottomNavigator: FC = () => {
   useEffect(() => {
     const unSubArray: Unsubscribe[] = [];
     unSubArray.push(
-      onSnapshot(query(reportCollectionRef), (reportsSnapshot) => {
+      onSnapshot(api.report.getAll(), (reportsSnapshot) => {
         const reports: IReport[] = [];
         reportsSnapshot.forEach((documentSnapshot) => {
           const reportFromDb = documentSnapshot.data() as IReportInDB;
@@ -51,15 +51,10 @@ export const BottomNavigator: FC = () => {
           async (userSnapshot) => {
             const currUser: IUserFromDb = userSnapshot.data() as IUserFromDb;
             if (currUser) {
+              const userForStore: IStoreUser = { ...currUser };
+
               const userImageUri = await api.user.getImageUri(currUser.uid);
-
-              const userForStore: IStoreUser = {
-                ...currUser,
-              };
-
-              if (userImageUri) {
-                userForStore.imageUri = userImageUri;
-              }
+              if (userImageUri) userForStore.imageUri = userImageUri;
 
               dispatch(updateUser(userForStore));
             }
